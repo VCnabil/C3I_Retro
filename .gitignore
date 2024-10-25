@@ -1,0 +1,23 @@
+
+# Track only selected items
+!source/
+!data/
+!Docs/
+!ProjectSourceFilesConfig.cmake
+
+# Ignore directories but keep them visible in Solution Explorer
+.vs/
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+rootfs/tmp/
+[Dd]ocs/
+rootfs/app/data/
+rootfs/app/event/
+rootfs/app/sbin/
+rootfs/media/
+scripts/
+usbupdate/
+  
+ 
