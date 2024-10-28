@@ -64,8 +64,6 @@ void processSerial(void)
 		pvci_arr[segmentIndex][currentIndex] = '\0';
 	}
 
-
-
 	const char* ccptr = pvci_string.c_str();
 
 	char sixthchar = ccptr[6];

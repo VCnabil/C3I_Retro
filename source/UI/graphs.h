@@ -77,12 +77,13 @@ class SingleSidedHorizontalBarGraph {
 private:
     int32_t x_location;  // X coordinate
     int32_t y_location;  // Y coordinate
-    bool flipped;        // orientation, 0 = centered, 1 = left, 2 = right
+    bool flipped_over_y;        // orientation
+    bool flipped_over_x;
     uint32_t m_eidBar;
 
 public:
     // Constructor that initializes the graph's position and size
-    SingleSidedHorizontalBarGraph(int32_t x_location, int32_t y_location, bool flipped);
+    SingleSidedHorizontalBarGraph(int32_t x_location, int32_t y_location, bool flipped_over_y, bool flipped_over_x);
 
     // Default constructor
     SingleSidedHorizontalBarGraph();
