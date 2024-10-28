@@ -69,13 +69,13 @@ void DoubleSidedVerticalBarGraph::draw(int position) const {
     
 }
 
-DoubleSidedHorizontalBarGraph::DoubleSidedHorizontalBarGraph(std::string side, std::string name, int32_t x_location, int32_t y_location, bool fullscreen, bool flipped_over_y, bool flipped_over_x)
-    : side(side), name(name), x_location(x_location), y_location(y_location), fullscreen(fullscreen), flipped_over_y(flipped_over_y), flipped_over_x(flipped_over_x) {
+DoubleSidedHorizontalBarGraph::DoubleSidedHorizontalBarGraph(std::string side, std::string name, int32_t x_location, int32_t y_location, bool fullscreen, bool flipped_over_y)
+    : side(side), name(name), x_location(x_location), y_location(y_location), fullscreen(fullscreen), flipped_over_y(flipped_over_y) {
     m_eidBar = ElementGetNewId();
 }
 
 DoubleSidedHorizontalBarGraph::DoubleSidedHorizontalBarGraph()
-    : side(""), name(""), x_location(0), y_location(), fullscreen(false), flipped_over_y(false), flipped_over_x(false), m_eidBar(0) {};
+    : side(""), name(""), x_location(0), y_location(), fullscreen(false), flipped_over_y(false), m_eidBar(0) {};
 
 void DoubleSidedHorizontalBarGraph::draw(int position) const {
     if (flipped_over_y) position = position * -1;
@@ -115,34 +115,58 @@ SingleSidedVerticalBarGraph::SingleSidedVerticalBarGraph()
     : x_location(0), y_location(0), flipped_over_y(false), flipped_over_x(false), m_eidBar(0) {};
 
 void SingleSidedVerticalBarGraph::draw(int position) const {
-    if (flipped_over_x) position = position * -1;
-
-    outimagearea(x_location, y_location, &bar, 0, 0, 10, 4, 100, ALPHA_INVARIANT, LAYER_FRONT);
-
     if (flipped_over_y) {
-        for (int i = 0; i < position; i++) {
-            outimagearea(x_location, y_location + 7 + (i * 7), &bar, 0, 0, 10 + (i * i / 8 * 1.001), 4, 100, ALPHA_INVARIANT, LAYER_FRONT);
+        if (flipped_over_x) {
+            outimagearea(x_location, y_location + 140, &bar, 0, 0, 10, 4, 100, ALPHA_INVARIANT, LAYER_FRONT);
+            for (int i = 0; i < position; i++) {
+                outimagearea(x_location, (y_location + 140) - 7 - (i * 7), &bar, 0, 0, 10 + (i * i / 8 * 1.001), 4, 100, ALPHA_INVARIANT, LAYER_FRONT);
+            }
+
+            SimpleTextSetupFontEx(FONT_INDEX_TTMAIN, 15, HORIZONTAL_ALIGNMENT_LEFT, VERTICAL_ALIGNMENT_TOP, 0);
+            SimpleTextDraw(x_location + 35, y_location + 115, side.c_str(), BLACK, 100, LAYER_FRONT);
+            SimpleTextDraw(x_location + 35, y_location + 130, name.c_str(), BLACK, 100, LAYER_FRONT);
         }
+        else {
+            outimagearea(x_location, y_location, &bar, 0, 0, 10, 4, 100, ALPHA_INVARIANT, LAYER_FRONT);
+            for (int i = 0; i < position; i++) {
+                outimagearea(x_location, y_location + 7 + (i * 7), &bar, 0, 0, 10 + (i * i / 8 * 1.001), 4, 100, ALPHA_INVARIANT, LAYER_FRONT);
+            }
+
+            SimpleTextSetupFontEx(FONT_INDEX_TTMAIN, 15, HORIZONTAL_ALIGNMENT_LEFT, VERTICAL_ALIGNMENT_TOP, 0);
+            SimpleTextDraw(x_location + 35, y_location - 3, side.c_str(), BLACK, 100, LAYER_FRONT);
+            SimpleTextDraw(x_location + 35, y_location + 12, name.c_str(), BLACK, 100, LAYER_FRONT);
+        }
+        
         vlineEx(x_location - 2, y_location - 3, y_location + 147, NORMAL, SOLID, BLACK, 100, LAYER_FRONT);
         hlineEx(x_location - 2, y_location - 3, x_location + 58, NORMAL, SOLID, BLACK, 100, LAYER_FRONT);
         hlineEx(x_location - 2, y_location + 147, x_location + 58, NORMAL, SOLID, BLACK, 100, LAYER_FRONT);
-
-        SimpleTextSetupFontEx(FONT_INDEX_TTMAIN, 15, HORIZONTAL_ALIGNMENT_LEFT, VERTICAL_ALIGNMENT_TOP, 0);
-        SimpleTextDraw(x_location + 35, y_location - 3, side.c_str(), BLACK, 100, LAYER_FRONT);
-        SimpleTextDraw(x_location + 35, y_location + 12, name.c_str(), BLACK, 100, LAYER_FRONT);
     }
     else {
-        for (int i = 0; i < position; i++) {
-            outimagearea(x_location - (i * i / 8 * 1.001), y_location + 7 + (i * 7), &bar, 0, 0, 10 + (i * i / 8 * 1.001), 4, 100, ALPHA_INVARIANT, LAYER_FRONT);
+        if (flipped_over_x) {
+            outimagearea(x_location, y_location + 140, &bar, 0, 0, 10, 4, 100, ALPHA_INVARIANT, LAYER_FRONT);
+            for (int i = 0; i < position; i++) {
+                outimagearea(x_location - (i * i / 8 * 1.001), (y_location + 140) - 7 - (i * 7), &bar, 0, 0, 10 + (i * i / 8 * 1.001), 4, 100, ALPHA_INVARIANT, LAYER_FRONT);
+            }
+
+            SimpleTextSetupFontEx(FONT_INDEX_TTMAIN, 15, HORIZONTAL_ALIGNMENT_LEFT, VERTICAL_ALIGNMENT_TOP, 0);
+            SimpleTextDraw(x_location - 45, y_location + 116, side.c_str(), BLACK, 100, LAYER_FRONT);
+            SimpleTextDraw(x_location - 45, y_location + 131, name.c_str(), BLACK, 100, LAYER_FRONT);
         }
+        else {
+            outimagearea(x_location, y_location, &bar, 0, 0, 10, 4, 100, ALPHA_INVARIANT, LAYER_FRONT);
+            for (int i = 0; i < position; i++) {
+                outimagearea(x_location - (i * i / 8 * 1.001), y_location + 7 + (i * 7), &bar, 0, 0, 10 + (i * i / 8 * 1.001), 4, 100, ALPHA_INVARIANT, LAYER_FRONT);
+            }
+
+            SimpleTextSetupFontEx(FONT_INDEX_TTMAIN, 15, HORIZONTAL_ALIGNMENT_LEFT, VERTICAL_ALIGNMENT_TOP, 0);
+            SimpleTextDraw(x_location - 45, y_location - 3, side.c_str(), BLACK, 100, LAYER_FRONT);
+            SimpleTextDraw(x_location - 45, y_location + 12, name.c_str(), BLACK, 100, LAYER_FRONT);
+        }
+        
 
         vlineEx(x_location + 12, y_location - 3, y_location + 147, NORMAL, SOLID, BLACK, 100, LAYER_FRONT);
         hlineEx(x_location + 12, y_location - 3, x_location - 48, NORMAL, SOLID, BLACK, 100, LAYER_FRONT);
         hlineEx(x_location + 12, y_location + 147, x_location - 48, NORMAL, SOLID, BLACK, 100, LAYER_FRONT);
-
-        SimpleTextSetupFontEx(FONT_INDEX_TTMAIN, 15, HORIZONTAL_ALIGNMENT_LEFT, VERTICAL_ALIGNMENT_TOP, 0);
-        SimpleTextDraw(x_location - 47, y_location - 3, side.c_str(), BLACK, 100, LAYER_FRONT);
-        SimpleTextDraw(x_location - 47, y_location + 12, name.c_str(), BLACK, 100, LAYER_FRONT);
     }
     
 }
@@ -158,7 +182,15 @@ SingleSidedHorizontalBarGraph::SingleSidedHorizontalBarGraph()
 void SingleSidedHorizontalBarGraph::draw(int position) const {
     outimagearea(x_location, y_location, &bar, 0, 0, 5, 10, 100, ALPHA_INVARIANT, LAYER_FRONT);
 
-    for (int i = 0; i < position; i++) {
-        outimagearea(x_location + 8 + (i * 8), y_location - (i * i / 8 * 1.0001), &bar, 0, 0, 5, 10 + (i * i / 8 * 1.0005), 100, ALPHA_INVARIANT, LAYER_FRONT);
+    if (flipped_over_x) {
+        for (int i = 0; i < position; i++) {
+            outimagearea(x_location + 8 + (i * 8), y_location - (i * i / 8 * 1.0001), &bar, 0, 0, 5, 10 + (i * i / 8 * 1.0005), 100, ALPHA_INVARIANT, LAYER_FRONT);
+        }
     }
+    else {
+        for (int i = 0; i < position; i++) {
+            outimagearea(x_location + 8 + (i * 8), y_location - (i * i / 8 * 1.0001), &bar, 0, 0, 5, 10 + (i * i / 8 * 1.0005), 100, ALPHA_INVARIANT, LAYER_FRONT);
+        }
+    }
+    
 }

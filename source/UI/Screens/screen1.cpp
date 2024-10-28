@@ -72,30 +72,30 @@ void graphSetup(int indication_config)
 	switch (indication_config) {
 	case 1:
 		bucket1 = DoubleSidedVerticalBarGraph("BUCKET", "", 148, 90, false, m_SYSTEMOPTIONS_DB[3].status);
-		nozzle1 = DoubleSidedHorizontalBarGraph("NOZZLE", "", 160, 215, true, false, m_SYSTEMOPTIONS_DB[2].status);
+		nozzle1 = DoubleSidedHorizontalBarGraph("NOZZLE", "", 160, 215, true, m_SYSTEMOPTIONS_DB[2].status);
 		break;
 
 	case 2:
 		bucket1 = DoubleSidedVerticalBarGraph("Port", "BKT", 80, 90, true, m_SYSTEMOPTIONS_DB[3].status);
 		bucket2 = DoubleSidedVerticalBarGraph("Stbd", "BKT", 228, 90, false, m_SYSTEMOPTIONS_DB[3].status);
 
-		nozzle1 = DoubleSidedHorizontalBarGraph("Port", "NOZ", 80, 215, false, false, m_SYSTEMOPTIONS_DB[2].status);
-		nozzle2 = DoubleSidedHorizontalBarGraph("Stbd", "NOZ", 240, 215, false, false, m_SYSTEMOPTIONS_DB[2].status);
+		nozzle1 = DoubleSidedHorizontalBarGraph("Port", "NOZ", 80, 215, false, m_SYSTEMOPTIONS_DB[2].status);
+		nozzle2 = DoubleSidedHorizontalBarGraph("Stbd", "NOZ", 240, 215, false, m_SYSTEMOPTIONS_DB[2].status);
 		break;
 
 	case 3:
 		bucket1 = DoubleSidedVerticalBarGraph("Port", "BKT", 80, 90, true, m_SYSTEMOPTIONS_DB[3].status);
 		bucket2 = DoubleSidedVerticalBarGraph("Stbd", "BKT", 228, 90, false, m_SYSTEMOPTIONS_DB[3].status);
 
-		nozzle1 = DoubleSidedHorizontalBarGraph("NOZZLE", "", 160, 215, true, false, m_SYSTEMOPTIONS_DB[2].status);
+		nozzle1 = DoubleSidedHorizontalBarGraph("NOZZLE", "", 160, 215, true, m_SYSTEMOPTIONS_DB[2].status);
 		break;
 
 	case 4:
 		bucket1 = DoubleSidedVerticalBarGraph("Port", "BKT", 140, 90, true, m_SYSTEMOPTIONS_DB[3].status);
 		bucket2 = DoubleSidedVerticalBarGraph("Stbd", "BKT", 174, 90, false, m_SYSTEMOPTIONS_DB[3].status);
 
-		nozzle1 = DoubleSidedHorizontalBarGraph("Port", "NOZ", 80, 215, false, false, m_SYSTEMOPTIONS_DB[2].status);
-		nozzle2 = DoubleSidedHorizontalBarGraph("Stbd", "NOZ", 240, 215, false, false, m_SYSTEMOPTIONS_DB[2].status);
+		nozzle1 = DoubleSidedHorizontalBarGraph("Port", "NOZ", 80, 215, false, m_SYSTEMOPTIONS_DB[2].status);
+		nozzle2 = DoubleSidedHorizontalBarGraph("Stbd", "NOZ", 240, 215, false, m_SYSTEMOPTIONS_DB[2].status);
 
 		interceptor1 = SingleSidedVerticalBarGraph("Port", "INT", 15, 20, true, m_SYSTEMOPTIONS_DB[4].status);
 		interceptor2 = SingleSidedVerticalBarGraph("Stbd", "INT", 300, 20, false, m_SYSTEMOPTIONS_DB[4].status);
@@ -105,7 +105,7 @@ void graphSetup(int indication_config)
 		bucket1 = DoubleSidedVerticalBarGraph("Port", "BKT", 140, 90, true, m_SYSTEMOPTIONS_DB[3].status);
 		bucket2 = DoubleSidedVerticalBarGraph("Stbd", "BKT", 174, 90, false, m_SYSTEMOPTIONS_DB[3].status);
 
-		nozzle1 = DoubleSidedHorizontalBarGraph("NOZZLE", "", 160, 215, true, false, m_SYSTEMOPTIONS_DB[2].status);
+		nozzle1 = DoubleSidedHorizontalBarGraph("NOZZLE", "", 160, 215, true, m_SYSTEMOPTIONS_DB[2].status);
 
 		interceptor1 = SingleSidedVerticalBarGraph("Port", "INT", 15, 20, true, m_SYSTEMOPTIONS_DB[4].status);
 		interceptor2 = SingleSidedVerticalBarGraph("Stbd", "INT", 300, 20, false, m_SYSTEMOPTIONS_DB[4].status);
