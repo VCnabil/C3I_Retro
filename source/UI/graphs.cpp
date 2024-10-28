@@ -53,14 +53,14 @@ void DoubleSidedVerticalBarGraph::draw(int position) const {
         outimagearea(x_location, y_location, &bar, 0, 0, 10, 4, 100, ALPHA_INVARIANT, LAYER_FRONT);
 
         // Handle positive positions (move downwards)
-        if (flipped_over_x ? -position : position > 0) {
-            for (int i = 0; i < flipped_over_x ? -position : position; i++) {
+        if (position > 0) {
+            for (int i = 0; i < position; i++) {
                 outimagearea(x_location, y_location + 7 + (i * 7), &bar, 0, 0, 10 + (i * i / 3 * 1.001), 4, 100, ALPHA_INVARIANT, LAYER_FRONT);
             }
         }
         // Handle negative positions (move upwards)
-        else if (flipped_over_x ? -position : position < 0) {
-            for (int i = 0; i > flipped_over_x ? -position : position; i--) {
+        else if (position < 0) {
+            for (int i = 0; i > position; i--) {
                 outimagearea(x_location, y_location - 7 + (i * 7), &bar, 0, 0, 10 + (i * i / 3 * 1.001), 4, 100, ALPHA_INVARIANT, LAYER_FRONT);
             }
         }
