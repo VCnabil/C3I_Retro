@@ -69,41 +69,45 @@ void DoubleSidedVerticalBarGraph::draw(int position) const {
     
 }
 
-DoubleSidedHorizontalBarGraph::DoubleSidedHorizontalBarGraph(std::string side, std::string name, int32_t x_location, int32_t y_location, bool fullscreen)
-    : side(side), name(name), x_location(x_location), y_location(y_location), fullscreen(fullscreen) {
+DoubleSidedHorizontalBarGraph::DoubleSidedHorizontalBarGraph(std::string side, std::string name, int32_t x_location, int32_t y_location, int orientation)
+    : side(side), name(name), x_location(x_location), y_location(y_location), orientation(orientation) {
     m_eidBar = ElementGetNewId();
 }
 
 DoubleSidedHorizontalBarGraph::DoubleSidedHorizontalBarGraph()
-    : side(""), name(""), x_location(0), y_location(), fullscreen(false), m_eidBar(0) {};
+    : side(""), name(""), x_location(0), y_location(), orientation(0), m_eidBar(0) {};
 
 void DoubleSidedHorizontalBarGraph::draw(int position) const {
-    int width = fullscreen ? 2 : 1;
-
-    outimagearea(x_location, y_location, &bar, 0, 0, width * 3, 10, 100, ALPHA_INVARIANT, LAYER_FRONT);
+    outimagearea(x_location, y_location, &bar, 0, 0, 3, 10, 100, ALPHA_INVARIANT, LAYER_FRONT);
 
     // Handle positive positions (move right)
     if (position > 0) {
         for (int i = 0; i < position; i++) {
-            outimagearea(x_location + width * 6 + (i * width * 6), y_location - (i * i / 3 * 1.0001), &bar, 0, 0, width * 3, 10 + (i * i / 3 * 1.0005), 100, ALPHA_INVARIANT, LAYER_FRONT);
+            outimagearea(x_location + 6 + (i * 6), y_location - (i * i / 3 * 1.0001), &bar, 0, 0, 3, 10 + (i * i / 3 * 1.0005), 100, ALPHA_INVARIANT, LAYER_FRONT);
         }
     }
     // Handle negative positions (move left)
     else if (position < 0) {
         for (int i = 0; i > position; i--) {
-            outimagearea(x_location - width * 6 + (i * width * 6), y_location - (i * i / 3 * 1.0001), &bar, 0, 0, width * 3, 10 + (i * i / 3 * 1.0005), 100, ALPHA_INVARIANT, LAYER_FRONT);
+            outimagearea(x_location - 6 + (i * 6), y_location - (i * i / 3 * 1.0001), &bar, 0, 0, 3, 10 + (i * i / 3 * 1.0005), 100, ALPHA_INVARIANT, LAYER_FRONT);
         }
     }
 
     SimpleTextSetupFontEx(FONT_INDEX_TTMAIN, 15, HORIZONTAL_ALIGNMENT_CENTRE, VERTICAL_ALIGNMENT_TOP, 0);
-    
-    SimpleTextDraw(x_location, y_location - 40, side.c_str(), BLACK, 100, LAYER_FRONT);
-    SimpleTextDraw(x_location, y_location - 25, name.c_str(), BLACK, 100, LAYER_FRONT);
-   
+    if (orientation == 0) {
+        SimpleTextDraw(x_location, y_location - 40, side.c_str(), BLACK, 100, LAYER_FRONT);
+        SimpleTextDraw(x_location, y_location - 25, name.c_str(), BLACK, 100, LAYER_FRONT);
+    }
+    else if (orientation == 1) {
 
-    hlineEx(x_location - width * 63, y_location + 12, x_location + width * 66, NORMAL, SOLID, BLACK, 100, LAYER_FRONT);
-    vlineEx(x_location - width * 63, y_location + 12, y_location - 32, NORMAL, SOLID, BLACK, 100, LAYER_FRONT);
-    vlineEx(x_location + width * 66, y_location + 12, y_location - 32, NORMAL, SOLID, BLACK, 100, LAYER_FRONT);
+    }
+    else {
+
+    }
+
+    hlineEx(x_location - 63, y_location + 12, x_location + 66, NORMAL, SOLID, BLACK, 100, LAYER_FRONT);
+    vlineEx(x_location - 63, y_location + 12, y_location - 32, NORMAL, SOLID, BLACK, 100, LAYER_FRONT);
+    vlineEx(x_location + 66, y_location + 12, y_location - 32, NORMAL, SOLID, BLACK, 100, LAYER_FRONT);
 }
 
 SingleSidedVerticalBarGraph::SingleSidedVerticalBarGraph(std::string side, std::string name, int32_t x_location, int32_t y_location, bool flipped)

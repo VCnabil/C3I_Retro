@@ -33,14 +33,14 @@ class DoubleSidedHorizontalBarGraph {
 private:
     int32_t x_location;  // X coordinate
     int32_t y_location;  // Y coordinate
-    bool fullscreen;
+    int orientation;        // orientation: 0 = centered, 1 = left, 2 = right
     uint32_t m_eidBar;
     std::string name;       //Device (bucket, nozzle, interceptor)
     std::string side;       //port or stbd, station 1 or 2
 
 public:
     // Constructor that initializes the graph's position and size
-    DoubleSidedHorizontalBarGraph(std::string side, std::string name, int32_t x_location, int32_t y_location, bool fullscreen);
+    DoubleSidedHorizontalBarGraph(std::string side, std::string name, int32_t x_location, int32_t y_location, int orientation);
 
     // Default constructor
     DoubleSidedHorizontalBarGraph();
