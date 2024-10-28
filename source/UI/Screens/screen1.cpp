@@ -67,35 +67,35 @@ DoubleSidedHorizontalBarGraph nozzle2;
 SingleSidedVerticalBarGraph interceptor1;
 SingleSidedVerticalBarGraph interceptor2;
 
-void graphSetup(int indication_config) 
+void graphSetup(int lcd_config) 
 {
-	switch (indication_config) {
+	switch (lcd_config) {
 	case 1:
 		bucket1 = DoubleSidedVerticalBarGraph("BUCKET", "", 148, 90, false);
-		nozzle1 = DoubleSidedHorizontalBarGraph("NOZZLE", "", 160, 215, 0);
+		nozzle1 = DoubleSidedHorizontalBarGraph("NOZZLE", "", 160, 215, true);
 		break;
 
 	case 2:
 		bucket1 = DoubleSidedVerticalBarGraph("Port", "BKT", 80, 90, true);
 		bucket2 = DoubleSidedVerticalBarGraph("Stbd", "BKT", 228, 90, false);
 
-		nozzle1 = DoubleSidedHorizontalBarGraph("Port", "NOZ", 80, 215, 0);
-		nozzle2 = DoubleSidedHorizontalBarGraph("Stbd", "NOZ", 240, 215, 0);
+		nozzle1 = DoubleSidedHorizontalBarGraph("Port", "NOZ", 80, 215, false);
+		nozzle2 = DoubleSidedHorizontalBarGraph("Stbd", "NOZ", 240, 215, false);
 		break;
 
 	case 3:
 		bucket1 = DoubleSidedVerticalBarGraph("Port", "BKT", 80, 90, true);
 		bucket2 = DoubleSidedVerticalBarGraph("Stbd", "BKT", 228, 90, false);
 
-		nozzle1 = DoubleSidedHorizontalBarGraph("NOZZLE", "", 160, 215, 0);
+		nozzle1 = DoubleSidedHorizontalBarGraph("NOZZLE", "", 160, 215, true);
 		break;
 
 	case 4:
 		bucket1 = DoubleSidedVerticalBarGraph("Port", "BKT", 140, 90, true);
 		bucket2 = DoubleSidedVerticalBarGraph("Stbd", "BKT", 174, 90, false);
 
-		nozzle1 = DoubleSidedHorizontalBarGraph("Port", "NOZ", 80, 215, 0);
-		nozzle2 = DoubleSidedHorizontalBarGraph("Stbd", "NOZ", 240, 215, 0);
+		nozzle1 = DoubleSidedHorizontalBarGraph("Port", "NOZ", 80, 215, false);
+		nozzle2 = DoubleSidedHorizontalBarGraph("Stbd", "NOZ", 240, 215, false);
 
 		interceptor1 = SingleSidedVerticalBarGraph("Port", "INT", 15, 20, true);
 		interceptor2 = SingleSidedVerticalBarGraph("Stbd", "INT", 300, 20, false);
@@ -105,7 +105,7 @@ void graphSetup(int indication_config)
 		bucket1 = DoubleSidedVerticalBarGraph("Port", "BKT", 140, 90, true);
 		bucket2 = DoubleSidedVerticalBarGraph("Stbd", "BKT", 174, 90, false);
 
-		nozzle1 = DoubleSidedHorizontalBarGraph("NOZZLE", "", 160, 215, 0);
+		nozzle1 = DoubleSidedHorizontalBarGraph("NOZZLE", "", 160, 215, true);
 
 		interceptor1 = SingleSidedVerticalBarGraph("Port", "INT", 15, 20, true);
 		interceptor2 = SingleSidedVerticalBarGraph("Stbd", "INT", 300, 20, false);
@@ -113,8 +113,8 @@ void graphSetup(int indication_config)
 	}
 }
 
-void graphDraw(int indication_config) {
-	switch (indication_config) {
+void graphDraw(int lcd_config) {
+	switch (lcd_config) {
 	case 1:
 		bucket1.draw(portBucketPosition);
 
