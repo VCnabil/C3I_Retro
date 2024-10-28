@@ -64,16 +64,14 @@ void processSerial(void)
 		pvci_arr[segmentIndex][currentIndex] = '\0';
 	}
 
-
-
 	const char* ccptr = pvci_string.c_str();
 
 	char sixthchar = ccptr[6];
 
-	int mapped_portBucketPosition = ((std::atoi(pvci_arr[1]) * 1000 / 999) - 500) / 50;
-	int mapped_stbdBucketPosition = ((std::atoi(pvci_arr[2]) * 1000 / 999) - 500) / 50;
-	int mapped_portNozzlePosition = ((std::atoi(pvci_arr[3]) * 1000 / 999) - 500) / 50;
-	int mapped_stbdNozzlePosition = ((std::atoi(pvci_arr[4]) * 1000 / 999) - 500) / 50;
+	int mapped_portNozzlePosition = ((std::atoi(pvci_arr[1]) * 1000 / 999) - 500) / 50;
+	int mapped_stbdNozzlePosition = ((std::atoi(pvci_arr[2]) * 1000 / 999) - 500) / 50;
+	int mapped_portBucketPosition = ((std::atoi(pvci_arr[3]) * 1000 / 999) - 500) / 50;
+	int mapped_stbdBucketPosition = ((std::atoi(pvci_arr[4]) * 1000 / 999) - 500) / 50;
 	int mapped_portInterceptorPosition = (std::atoi(pvci_arr[5]) * 1000 / 999) / 50;
 	int mapped_stbdInterceptorPosition = (std::atoi(pvci_arr[6]) * 1000 / 999) / 50;
 
@@ -88,7 +86,7 @@ void processSerial(void)
 	nfe = static_cast<uint8_t>(std::atoi(pvci_arr[8]));
 	sta1 = static_cast<uint8_t>(std::atoi(pvci_arr[9]));
 
-	lcd_config = std::atoi(pvci_arr[14]);
+	lcd_config = 4;//std::atoi(pvci_arr[14]);
 
 	if (sfe | nfe | sta1 | sta2 | sta3) {
 		gal = 0b00000001;

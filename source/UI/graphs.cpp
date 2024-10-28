@@ -2,18 +2,17 @@
 #include <iostream>
 
 
-DoubleSidedVerticalBarGraph::DoubleSidedVerticalBarGraph(std::string side, std::string name, int32_t x_location, int32_t y_location, bool flipped)
-    : side(side), name(name), x_location(x_location), y_location(y_location), flipped(flipped) {
+DoubleSidedVerticalBarGraph::DoubleSidedVerticalBarGraph(std::string side, std::string name, int32_t x_location, int32_t y_location, bool flipped_over_y, bool flipped_over_x)
+    : side(side), name(name), x_location(x_location), y_location(y_location), flipped_over_y(flipped_over_y), flipped_over_x(flipped_over_x) {
     m_eidBar = ElementGetNewId();
-
 }
 
 DoubleSidedVerticalBarGraph::DoubleSidedVerticalBarGraph()
-    : side(""), name(""), x_location(0), y_location(), flipped(false), m_eidBar(0) {};
+    : side(""), name(""), x_location(0), y_location(), flipped_over_y(false), flipped_over_x(false), m_eidBar(0) {};
 
 void DoubleSidedVerticalBarGraph::draw(int position) const {
-
-    if (flipped) {
+    
+    if (flipped_over_y) {
         // Drawing the graph frame
         vlineEx(x_location + 12, y_location - 73, y_location + 77, NORMAL, SOLID, BLACK, 100, LAYER_FRONT);
         hlineEx(x_location + 12, y_location - 73, x_location - 32, NORMAL, SOLID, BLACK, 100, LAYER_FRONT);
@@ -53,14 +52,14 @@ void DoubleSidedVerticalBarGraph::draw(int position) const {
         outimagearea(x_location, y_location, &bar, 0, 0, 10, 4, 100, ALPHA_INVARIANT, LAYER_FRONT);
 
         // Handle positive positions (move downwards)
-        if (position > 0) {
-            for (int i = 0; i < position; i++) {
+        if (flipped_over_x ? -position : position > 0) {
+            for (int i = 0; i < flipped_over_x ? -position : position; i++) {
                 outimagearea(x_location, y_location + 7 + (i * 7), &bar, 0, 0, 10 + (i * i / 3 * 1.001), 4, 100, ALPHA_INVARIANT, LAYER_FRONT);
             }
         }
         // Handle negative positions (move upwards)
-        else if (position < 0) {
-            for (int i = 0; i > position; i--) {
+        else if (flipped_over_x ? -position : position < 0) {
+            for (int i = 0; i > flipped_over_x ? -position : position; i--) {
                 outimagearea(x_location, y_location - 7 + (i * 7), &bar, 0, 0, 10 + (i * i / 3 * 1.001), 4, 100, ALPHA_INVARIANT, LAYER_FRONT);
             }
         }
@@ -69,13 +68,13 @@ void DoubleSidedVerticalBarGraph::draw(int position) const {
     
 }
 
-DoubleSidedHorizontalBarGraph::DoubleSidedHorizontalBarGraph(std::string side, std::string name, int32_t x_location, int32_t y_location, bool fullscreen)
-    : side(side), name(name), x_location(x_location), y_location(y_location), fullscreen(fullscreen) {
+DoubleSidedHorizontalBarGraph::DoubleSidedHorizontalBarGraph(std::string side, std::string name, int32_t x_location, int32_t y_location, bool fullscreen, bool flipped_over_y)
+    : side(side), name(name), x_location(x_location), y_location(y_location), fullscreen(fullscreen), flipped_over_y(flipped_over_y) {
     m_eidBar = ElementGetNewId();
 }
 
 DoubleSidedHorizontalBarGraph::DoubleSidedHorizontalBarGraph()
-    : side(""), name(""), x_location(0), y_location(), fullscreen(false), m_eidBar(0) {};
+    : side(""), name(""), x_location(0), y_location(), fullscreen(false), flipped_over_y(false), m_eidBar(0) {};
 
 void DoubleSidedHorizontalBarGraph::draw(int position) const {
     int width = fullscreen ? 2 : 1;
@@ -106,18 +105,18 @@ void DoubleSidedHorizontalBarGraph::draw(int position) const {
     vlineEx(x_location + width * 66, y_location + 12, y_location - 32, NORMAL, SOLID, BLACK, 100, LAYER_FRONT);
 }
 
-SingleSidedVerticalBarGraph::SingleSidedVerticalBarGraph(std::string side, std::string name, int32_t x_location, int32_t y_location, bool flipped)
-    : side(side), name(name), x_location(x_location), y_location(y_location), flipped(flipped) {
+SingleSidedVerticalBarGraph::SingleSidedVerticalBarGraph(std::string side, std::string name, int32_t x_location, int32_t y_location, bool flipped_over_y, bool flipped_over_x)
+    : side(side), name(name), x_location(x_location), y_location(y_location), flipped_over_x(flipped_over_x), flipped_over_y(flipped_over_y) {
     m_eidBar = ElementGetNewId();
 }
 
 SingleSidedVerticalBarGraph::SingleSidedVerticalBarGraph()
-    : x_location(0), y_location(0), flipped(false), m_eidBar(0) {};
+    : x_location(0), y_location(0), flipped_over_y(false), flipped_over_x(false), m_eidBar(0) {};
 
 void SingleSidedVerticalBarGraph::draw(int position) const {
     outimagearea(x_location, y_location, &bar, 0, 0, 10, 4, 100, ALPHA_INVARIANT, LAYER_FRONT);
 
-    if (flipped) {
+    if (flipped_over_y) {
         for (int i = 0; i < position; i++) {
             outimagearea(x_location, y_location + 7 + (i * 7), &bar, 0, 0, 10 + (i * i / 8 * 1.001), 4, 100, ALPHA_INVARIANT, LAYER_FRONT);
         }
@@ -145,13 +144,13 @@ void SingleSidedVerticalBarGraph::draw(int position) const {
     
 }
 
-SingleSidedHorizontalBarGraph::SingleSidedHorizontalBarGraph(int32_t x_location, int32_t y_location, bool flipped)
-    : x_location(x_location), y_location(y_location), flipped(flipped) {
+SingleSidedHorizontalBarGraph::SingleSidedHorizontalBarGraph(int32_t x_location, int32_t y_location, bool flipped_over_y, bool flipped_over_x)
+    : x_location(x_location), y_location(y_location), flipped_over_y(flipped_over_y), flipped_over_x(flipped_over_x) {
     m_eidBar = ElementGetNewId();
 }
 
 SingleSidedHorizontalBarGraph::SingleSidedHorizontalBarGraph()
-    : x_location(0), y_location(0), flipped(false), m_eidBar(0) {};
+    : x_location(0), y_location(0), flipped_over_y(false), flipped_over_x(false), m_eidBar(0) {};
 
 void SingleSidedHorizontalBarGraph::draw(int position) const {
     outimagearea(x_location, y_location, &bar, 0, 0, 5, 10, 100, ALPHA_INVARIANT, LAYER_FRONT);
