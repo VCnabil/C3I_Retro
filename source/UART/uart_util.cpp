@@ -85,6 +85,8 @@ void processSerial(void)
 	sfe = static_cast<uint8_t>(std::atoi(pvci_arr[7]));
 	nfe = static_cast<uint8_t>(std::atoi(pvci_arr[8]));
 	sta1 = static_cast<uint8_t>(std::atoi(pvci_arr[9]));
+	sta2 = static_cast<uint8_t>(std::atoi(pvci_arr[10]));
+	sta3 = static_cast<uint8_t>(std::atoi(pvci_arr[11]));
 
 	lcd_config = 4;//std::atoi(pvci_arr[14]);
 
