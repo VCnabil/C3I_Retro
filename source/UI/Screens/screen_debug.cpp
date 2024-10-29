@@ -4,7 +4,7 @@ static uint32_t m_eidHeaderText = ELEMENTID_INVALID;
 static uint32_t m_eidData = ELEMENTID_INVALID;
 
 static void _Key1Release(void* userData);
-
+char* CalcChecksum(const char* sentence);
 
 void ScreenDebugEnter(void)
 {
@@ -56,6 +56,21 @@ void ScreenDebugUpdate(void)
 
 	uint8_t* buf = PeekMessage(PeekTail, 1, (uint8_t*)str, sizeof(str));
 	SimpleTextDrawEle(m_eidData, (dataGap_X / 2), dataStart_Y + 100, str, BLACK, 100, LAYER_FRONT);
+	int value0 = 1;
+	int value1 = 0;
+	int value2 = 0;
+	int value3 = 0;
+	int value4 = 0;
+	int value5 = 0;
+	int value6 = 0;
+	int value7 = 0;
+	char messageWithoutChecksum[50];
+	snprintf(messageWithoutChecksum, sizeof(messageWithoutChecksum), "$PVCC,%d,%d,%d,%d,%d,%d,%d,%d", value0, value1, value2, value3, value4, value5, value6, value7);
+	char* checksum = CalcChecksum(messageWithoutChecksum);
+	char fullMessage[60]; //guestimate I counted 38bytes , but there could be more , so 60 is safe  
+	snprintf(fullMessage, sizeof(fullMessage), "%s*%s\r", messageWithoutChecksum, checksum);
+	uint32_t dataLen = strlen(fullMessage);
+	UARTSend((uint8_t*)fullMessage, dataLen);
 }
 
 void ScreenDebugExit(void)
@@ -66,4 +81,18 @@ static void _Key1Release(void* userData)
 {
 	MMIScreenGoto(SCREENID_1);
 }
-
+char* CalcChecksum(const char* msg) {
+	static char checksumStr[3];
+	int checksum = 0;
+	if (msg[0] == '$') {
+		msg++;
+	}
+	//while ( *msg != '*') {
+	//	checksum ^= (unsigned char)(*msg++);
+	//}
+	while (*msg && *msg != '*') {
+		checksum ^= (unsigned char)(*msg++);
+	}
+	snprintf(checksumStr, sizeof(checksumStr), "%02X", checksum);
+	return checksumStr;
+}
