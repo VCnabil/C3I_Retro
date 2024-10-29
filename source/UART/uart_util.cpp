@@ -91,7 +91,7 @@ void processSerial(void)
 
 	if(!m_SYSTEMOPTIONS_DB[7].status) 
 
-	lcd_config = 4;//std::atoi(pvci_arr[14]);
+	lcd_config = std::atoi(pvci_arr[14]);
 
 	if (sfe | nfe | sta1 | sta2 | sta3) {
 		gal = 0b00000001;
