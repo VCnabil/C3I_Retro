@@ -18,7 +18,7 @@ extern uint8_t sta3;
 extern uint8_t nfe;
 extern uint8_t sfe;
 extern uint8_t cfe;
-extern uint8_t gal;
+extern bool gal;
 
 extern int portBucketPosition;
 extern int stbdBucketPosition;

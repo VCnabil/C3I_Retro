@@ -2,8 +2,6 @@
 
 // Private Variables and Functions
 
-
-
 //Button Bar
 static void _Key1Release(void* userData);
 static void _Key2Release(void* userData);
@@ -11,6 +9,23 @@ static void _Key3Release(void* userData);
 static void _Key4Release(void* userData);
 static void _Key5Release(void* userData);
 
+enum Screen_State {
+	DEFAULT,
+	ZERO_THRUST,
+	AUTOCALIBRATION
+};
+
+Screen_State screen_state = DEFAULT;
+
+// Auto Calibration
+enum AutoCal_Command {
+	NONE = 0,
+	INITIALIZE = 11,
+	ABORT = 33,
+	FINISH = 22,
+};
+
+AutoCal_Command autocal_cmd = NONE;
 
 void Screen4Enter(void)
 {
@@ -39,14 +54,20 @@ void Screen4Create(void)
 	SimpleTextSetupFontEx(FONT_INDEX_TTMAIN, 25, HORIZONTAL_ALIGNMENT_CENTRE, VERTICAL_ALIGNMENT_TOP, 0);
 	SimpleTextDraw(lcd_get_width() / 2, 5, "System Calibration", BLACK, 100, LAYER_BACK);
 
-
-
 }
 
 void Screen4Update(void)
 {
 	fill_lcd_screen(WHITE, LAYER_FRONT);
+	if (screen_state == DEFAULT) {
 
+	}
+	if (screen_state == AUTOCALIBRATION) {
+
+	}
+	if (screen_state == ZERO_THRUST) {
+
+	}
 
 }
 
@@ -62,20 +83,61 @@ static void _Key1Release(void* userData)
 
 static void _Key2Release(void* userData)
 {
+	if (screen_state == DEFAULT) {
 
+	}
+	if (screen_state == AUTOCALIBRATION) {
+
+	}
+	if (screen_state == ZERO_THRUST) {
+
+	}
 }
 
 static void _Key3Release(void* userData)
 {
+	if (screen_state == DEFAULT) {
+		screen_state = ZERO_THRUST;
+		ButtonBarSetKeyImages(KEYINDEX_2, &blank, &blank);
+		ButtonBarSetKeyImages(KEYINDEX_3, &blank, &blank);
+		ButtonBarSetKeyImages(KEYINDEX_4, &blank, &blank);
+		ButtonBarSetKeyImages(KEYINDEX_5, &blank, &blank);
+	}
+	if (screen_state == AUTOCALIBRATION) {
 
+	}
+	if (screen_state == ZERO_THRUST) {
+
+	}
 }
 
 static void _Key4Release(void* userData)
 {
+	if (screen_state == DEFAULT) {
+		screen_state = AUTOCALIBRATION;
+		ButtonBarSetKeyImages(KEYINDEX_2, &blank, &blank);
+		ButtonBarSetKeyImages(KEYINDEX_3, &blank, &blank);
+		ButtonBarSetKeyImages(KEYINDEX_4, &blank, &blank);
+		ButtonBarSetKeyImages(KEYINDEX_5, &blank, &blank);
 
+	}
+	if (screen_state == AUTOCALIBRATION) {
+
+	}
+	if (screen_state == ZERO_THRUST) {
+
+	}
 }
 
 static void _Key5Release(void* userData)
 {
+	if (screen_state == DEFAULT) {
 
+	}
+	if (screen_state == AUTOCALIBRATION) {
+
+	}
+	if (screen_state == ZERO_THRUST) {
+
+	}
 }
