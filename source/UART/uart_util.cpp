@@ -8,6 +8,8 @@
 
 #include "project.h"
 
+
+// Variables FROM motherboard
 extern int lcd_config = 1;
 
 extern uint8_t sta1 = 0b00000000;
@@ -16,7 +18,7 @@ extern uint8_t sta3 = 0b00000000;
 extern uint8_t nfe = 0b00000000;
 extern uint8_t sfe = 0b00000000;
 extern uint8_t cfe = 0b00000000;
-extern uint8_t gal = 0b00000000;
+extern bool gal = false;
 
 extern int portNozzlePosition = 0;
 extern int stbdNozzlePosition = 0;
@@ -26,6 +28,12 @@ extern int portInterceptorPosition = 0;
 extern int stbdInterceptorPosition = 0;
 
 char pvci_arr[MAX_RAWINPUTSTRING_LENGTH][MAX_RAWINPUTSTRING_DIGITS];
+
+// Variables TO SEND to motherboard
+extern int intsteer = 0;
+extern int autocal_cmd = 0;
+extern int set1_set2_mode = 0;
+extern int position_capture_request = 0;
 
 void processSerial(void)
 {
@@ -94,6 +102,6 @@ void processSerial(void)
 	lcd_config = std::atoi(pvci_arr[14]);
 
 	if (sfe | nfe | sta1 | sta2 | sta3) {
-		gal = 0b00000001;
+		gal = true;
 	}
 }
