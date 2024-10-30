@@ -197,6 +197,7 @@ void Screen1Update(void)
 	fill_lcd_screen(WHITE, LAYER_FRONT);
 	
 	processSerial();
+	sendSerial();
 	
 	if (temp_config != lcd_config) {
 		temp_config = lcd_config;
