@@ -40,6 +40,7 @@ void Screen2Update(void)
     faults.clear();
 
     processSerial();
+    sendSerial();
 
     int faultCount = 0;
     for (int i = 0; i < 6; i++) { // 6 faults per station

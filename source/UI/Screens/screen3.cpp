@@ -55,6 +55,8 @@ void Screen3Create(void)
 void Screen3Update(void)
 {
 	fill_lcd_screen(WHITE, LAYER_FRONT);
+	processSerial();
+	sendSerial();
 
 	SimpleTextSetupFontEx(FONT_INDEX_TTMAIN, 15, HORIZONTAL_ALIGNMENT_LEFT, VERTICAL_ALIGNMENT_TOP, 0);
 	for (int i = 0; i < system_options_count / 2; i++) {

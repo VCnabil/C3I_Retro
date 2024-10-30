@@ -11,7 +11,8 @@ static void _Key5Release(void* userData);
 
 //Passcode
 int entered = 0;
-char passcode[4];
+const int array_size = 4;
+char passcode[array_size];
 
 void ScreenPasscodeEnter(void)
 {

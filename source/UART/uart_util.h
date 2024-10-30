@@ -18,7 +18,7 @@ extern uint8_t sta3;
 extern uint8_t nfe;
 extern uint8_t sfe;
 extern uint8_t cfe;
-extern uint8_t gal;
+extern bool gal;
 
 extern int portBucketPosition;
 extern int stbdBucketPosition;
@@ -27,6 +27,21 @@ extern int stbdNozzlePosition;
 extern int portInterceptorPosition;
 extern int stbdInterceptorPosition;
 
+extern int intsteer;
+extern int set1_set2_mode;
+extern int set1_set2_flag;
+
+extern int Autocal_Statusi;
+
+enum AutoCal_Command {
+	NONE = 0,
+	INITIALIZE = 11,
+	ABORT = 33,
+	FINISH = 22,
+};
+extern int autocal_cmd;
+
 void processSerial(void);
+void sendSerial(void);
 
 #endif // #ifndef __UARTUTIL_H__
