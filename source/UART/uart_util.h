@@ -27,6 +27,14 @@ extern int stbdNozzlePosition;
 extern int portInterceptorPosition;
 extern int stbdInterceptorPosition;
 
+extern int intsteer;
+extern int set1_set2_mode;
+extern int set1_set2_flag;
+
+extern int Autocal_Statusi;
+extern AutoCal_Command autocal_cmd;
+
 void processSerial(void);
+void sendSerial(void);
 
 #endif // #ifndef __UARTUTIL_H__

@@ -9,6 +9,8 @@
 #include "project.h"
 
 
+char* CalcChecksum(const char* sentence);
+
 // Variables FROM motherboard
 extern int lcd_config = 1;
 
@@ -31,9 +33,21 @@ char pvci_arr[MAX_RAWINPUTSTRING_LENGTH][MAX_RAWINPUTSTRING_DIGITS];
 
 // Variables TO SEND to motherboard
 extern int intsteer = 0;
-extern int autocal_cmd = 0;
 extern int set1_set2_mode = 0;
+extern int set1_set2_flag = 0;
 extern int position_capture_request = 0;
+
+// Variables received from motherboard
+extern int Autocal_Statusi = 0;
+
+enum AutoCal_Command {
+	NONE = 0,
+	INITIALIZE = 11,
+	ABORT = 33,
+	FINISH = 22,
+};
+
+extern AutoCal_Command autocal_cmd = NONE;
 
 void processSerial(void)
 {
@@ -83,7 +97,7 @@ void processSerial(void)
 	int mapped_portInterceptorPosition = (std::atoi(pvci_arr[5]) * 1000 / 999) / 50;
 	int mapped_stbdInterceptorPosition = (std::atoi(pvci_arr[6]) * 1000 / 999) / 50;
 
-	portBucketPosition = mapped_portBucketPosition;   
+	portBucketPosition = mapped_portBucketPosition;
 	stbdBucketPosition = mapped_stbdBucketPosition;
 	portNozzlePosition = mapped_portNozzlePosition;
 	stbdNozzlePosition = mapped_stbdNozzlePosition;
@@ -97,11 +111,43 @@ void processSerial(void)
 	sta3 = static_cast<uint8_t>(std::atoi(pvci_arr[11]));
 	cfe = static_cast<uint8_t>(std::atoi(pvci_arr[12]));
 
-	if(!m_SYSTEMOPTIONS_DB[7].status) 
+	if (!m_SYSTEMOPTIONS_DB[7].status)
 
-	lcd_config = std::atoi(pvci_arr[14]);
+		lcd_config = std::atoi(pvci_arr[14]);
 
 	if (sfe | nfe | sta1 | sta2 | sta3) {
 		gal = true;
 	}
+
+	Autocal_Statusi = std::atoi(pvci_arr[17]);
+}
+
+void sendSerial(void) {
+
+
+	char messageWithoutChecksum[50];
+
+	//snprintf(messageWithoutChecksum, sizeof(messageWithoutChecksum), "$PVCC,%d,%d,%d,%d,%d,%d,%d,%d", value0, value1, value2, value3, value4, value5, value6, value7);
+	snprintf(messageWithoutChecksum, sizeof(messageWithoutChecksum), "$PVCC,%d,%d,%d,%d,%d,%d,%d,%d", intsteer, autocal_cmd, set1_set2_mode, set1_set2_flag, 0, 0, 0, 0);
+
+	char* checksum = CalcChecksum(messageWithoutChecksum);
+	char fullMessage[60]; //guestimate I counted 38bytes , but there could be more , so 60 is safe  
+	snprintf(fullMessage, sizeof(fullMessage), "%s*%s\r", messageWithoutChecksum, checksum);
+	uint32_t dataLen = strlen(fullMessage);
+	UARTSend((uint8_t*)fullMessage, dataLen);
+}
+char* CalcChecksum(const char* msg) {
+	static char checksumStr[3];
+	int checksum = 0;
+	if (msg[0] == '$') {
+		msg++;
+	}
+	//while ( *msg != '*') {
+	//	checksum ^= (unsigned char)(*msg++);
+	//}
+	while (*msg && *msg != '*') {
+		checksum ^= (unsigned char)(*msg++);
+	}
+	snprintf(checksumStr, sizeof(checksumStr), "%02X", checksum);
+	return checksumStr;
 }
