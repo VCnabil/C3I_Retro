@@ -43,5 +43,6 @@ extern int autocal_cmd;
 
 void processSerial(void);
 void sendSerial(void);
+char* CalcChecksumSend(const char* msg);
 
 #endif // #ifndef __UARTUTIL_H__
