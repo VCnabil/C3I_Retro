@@ -26,19 +26,20 @@ Screen_State screen_state = DEFAULT;
 
 void Screen4Enter(void)
 {
-	ScreensSetupDefaultKeys();
-	ButtonBarSetKeyImages(KEYINDEX_1, &view_meters, &view_meters);
-	ButtonBarSetKeyImages(KEYINDEX_2, &blank, &blank);
-	ButtonBarSetKeyImages(KEYINDEX_3, &thrust_calib, &thrust_calib);
-	ButtonBarSetKeyImages(KEYINDEX_4, &init_cal, &init_cal);
-	ButtonBarSetKeyImages(KEYINDEX_5, &blank, &blank);
+	
+	
 }
 
 void Screen4Create(void)
 {
 	vLcdBlankerEx(WHITE, ALPHA_COLOR);
 
-	ButtonBarSetMode(BUTTONBARMODE_VISIBLE_ALWAYS);
+	ScreensSetupDefaultKeys();
+	ButtonBarSetKeyImages(KEYINDEX_1, &view_meters, &view_meters);
+	ButtonBarSetKeyImages(KEYINDEX_2, &blank, &blank);
+	ButtonBarSetKeyImages(KEYINDEX_3, &thrust_calib, &thrust_calib);
+	ButtonBarSetKeyImages(KEYINDEX_4, &init_cal, &init_cal);
+	ButtonBarSetKeyImages(KEYINDEX_5, &blank, &blank);
 
 	ButtonBarRegisterKeyReleaseCallback(KEYINDEX_1, _Key1Release, nullptr);
 	ButtonBarRegisterKeyReleaseCallback(KEYINDEX_2, _Key2Release, nullptr);
