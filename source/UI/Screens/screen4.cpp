@@ -151,7 +151,7 @@ static void _Key4Release(void* userData)
 		ButtonBarSetKeyImages(KEYINDEX_3, &blank, &blank);
 		ButtonBarSetKeyImages(KEYINDEX_4, &blank, &blank);
 		ButtonBarSetKeyImages(KEYINDEX_5, &blank, &blank);
-
+		autocal_cmd = INITIALIZE;
 	}
 	if (screen_state == AUTOCALIBRATION) {
 
