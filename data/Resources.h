@@ -344,6 +344,56 @@ typedef struct
 } init_cal_T;
 extern const init_cal_T init_cal;
 
+// Bitmap File: bitmaps/init_zthrust.png
+typedef struct
+{
+    unsigned char nb_layer;
+    unsigned int x;
+    unsigned int y;
+    unsigned short bitmap[3072];
+} init_zthrust_T;
+extern const init_zthrust_T init_zthrust;
+
+// Bitmap File: bitmaps/init_transmit.png
+typedef struct
+{
+    unsigned char nb_layer;
+    unsigned int x;
+    unsigned int y;
+    unsigned short bitmap[3072];
+} init_transmit_T;
+extern const init_transmit_T init_transmit;
+
+// Bitmap File: bitmaps/init_zthrust.png
+typedef struct
+{
+    unsigned char nb_layer;
+    unsigned int x;
+    unsigned int y;
+    unsigned short bitmap[3072];
+} set_zthrust_T;
+extern const set_zthrust_T set_zthrust;
+
+// Bitmap File: bitmaps/finish_calib.png
+typedef struct
+{
+    unsigned char nb_layer;
+    unsigned int x;
+    unsigned int y;
+    unsigned short bitmap[3072];
+} finish_calib_T;
+extern const finish_calib_T finish_calib;
+
+// Bitmap File: bitmaps/abort_calib.png
+typedef struct
+{
+    unsigned char nb_layer;
+    unsigned int x;
+    unsigned int y;
+    unsigned short bitmap[3072];
+} abort_calib_T;
+extern const abort_calib_T abort_calib;
+
 // Bitmap File: bitmaps/alarm_ack.png
 typedef struct
 {
