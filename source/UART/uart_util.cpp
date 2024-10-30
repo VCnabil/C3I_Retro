@@ -36,6 +36,7 @@ extern int intsteer = 0;
 extern int set1_set2_mode = 0;
 extern int set1_set2_flag = 0;
 extern int position_capture_request = 0;
+static char* CalcChecksumSend(const char* msg);
 
 // Variables received from motherboard
 extern int Autocal_Statusi = 0;
@@ -129,7 +130,7 @@ void sendSerial(void) {
 	uint32_t dataLen = strlen(fullMessage);
 	UARTSend((uint8_t*)fullMessage, dataLen);
 }
-char* CalcChecksumSend(const char* msg) {
+static char* CalcChecksumSend(const char* msg) {
 	static char checksumStr[3];
 	int checksum = 0;
 	if (msg[0] == '$') {
