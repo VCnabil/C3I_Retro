@@ -116,12 +116,12 @@ void processSerial(void)
 }
 
 void sendSerial(void) {
-
+	if (!m_SYSTEMOPTIONS_DB[1].status) return;
 
 	char messageWithoutChecksum[50];
 
 	//snprintf(messageWithoutChecksum, sizeof(messageWithoutChecksum), "$PVCC,%d,%d,%d,%d,%d,%d,%d,%d", value0, value1, value2, value3, value4, value5, value6, value7);
-	snprintf(messageWithoutChecksum, sizeof(messageWithoutChecksum), "$PVCC,%d,%d,%d,%d,%d,%d,%d,%d", intsteer, autocal_cmd, set1_set2_mode, set1_set2_flag, 0, 0, 0, 0);
+	snprintf(messageWithoutChecksum, sizeof(messageWithoutChecksum), "$PVCC,%d,%d,%d,%d,%d,%d,%d,%d", m_SYSTEMOPTIONS_DB[5].status ? 0 : 1, autocal_cmd, set1_set2_mode, set1_set2_flag, 0, 0, 0, 0);
 
 	char* checksum = CalcChecksumSend(messageWithoutChecksum);
 	char fullMessage[60]; //guestimate I counted 38bytes , but there could be more , so 60 is safe  

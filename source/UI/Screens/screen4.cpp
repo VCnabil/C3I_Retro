@@ -105,7 +105,8 @@ void Screen4Update(void)
 
 void Screen4Exit(void)
 {
-
+	autocal_cmd = NONE;
+	screen_state = DEFAULT;
 }
 
 static void _Key1Release(void* userData)
