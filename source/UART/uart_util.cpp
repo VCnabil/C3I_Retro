@@ -112,7 +112,7 @@ void processSerial(void)
 		gal = true;
 	}
 
-	Autocal_Statusi = std::atoi(pvci_arr[17]);
+	Autocal_Statusi = std::atoi(pvci_arr[16]);
 }
 
 void sendSerial(void) {
