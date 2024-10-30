@@ -32,7 +32,14 @@ extern int set1_set2_mode;
 extern int set1_set2_flag;
 
 extern int Autocal_Statusi;
-extern AutoCal_Command autocal_cmd;
+
+enum AutoCal_Command {
+	NONE = 0,
+	INITIALIZE = 11,
+	ABORT = 33,
+	FINISH = 22,
+};
+extern int autocal_cmd;
 
 void processSerial(void);
 void sendSerial(void);

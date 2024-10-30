@@ -40,14 +40,7 @@ extern int position_capture_request = 0;
 // Variables received from motherboard
 extern int Autocal_Statusi = 0;
 
-enum AutoCal_Command {
-	NONE = 0,
-	INITIALIZE = 11,
-	ABORT = 33,
-	FINISH = 22,
-};
-
-extern AutoCal_Command autocal_cmd = NONE;
+extern int autocal_cmd = NONE;
 
 void processSerial(void)
 {
@@ -130,13 +123,13 @@ void sendSerial(void) {
 	//snprintf(messageWithoutChecksum, sizeof(messageWithoutChecksum), "$PVCC,%d,%d,%d,%d,%d,%d,%d,%d", value0, value1, value2, value3, value4, value5, value6, value7);
 	snprintf(messageWithoutChecksum, sizeof(messageWithoutChecksum), "$PVCC,%d,%d,%d,%d,%d,%d,%d,%d", intsteer, autocal_cmd, set1_set2_mode, set1_set2_flag, 0, 0, 0, 0);
 
-	char* checksum = CalcChecksum(messageWithoutChecksum);
+	char* checksum = CalcChecksumSend(messageWithoutChecksum);
 	char fullMessage[60]; //guestimate I counted 38bytes , but there could be more , so 60 is safe  
 	snprintf(fullMessage, sizeof(fullMessage), "%s*%s\r", messageWithoutChecksum, checksum);
 	uint32_t dataLen = strlen(fullMessage);
 	UARTSend((uint8_t*)fullMessage, dataLen);
 }
-char* CalcChecksum(const char* msg) {
+char* CalcChecksumSend(const char* msg) {
 	static char checksumStr[3];
 	int checksum = 0;
 	if (msg[0] == '$') {
