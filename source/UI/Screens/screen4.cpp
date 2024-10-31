@@ -111,6 +111,8 @@ void Screen4Exit(void)
 {
 	autocal_cmd = NONE;
 	screen_state = DEFAULT;
+	set1_set2_mode = 0;
+	position_capture_request = 0;
 }
 
 static void _Key1Release(void* userData)
