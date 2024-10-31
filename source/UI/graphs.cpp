@@ -11,7 +11,7 @@ DoubleSidedVerticalBarGraph::DoubleSidedVerticalBarGraph()
     : side(""), name(""), x_location(0), y_location(), flipped_over_y(false), flipped_over_x(false), m_eidBar(0) {};
 
 void DoubleSidedVerticalBarGraph::draw(int position) const {
-    if (flipped_over_x) position = position * -1;
+    position = flipped_over_x ? position : position * -1;
 
     if (flipped_over_y) {
         // Drawing the graph frame

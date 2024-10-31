@@ -130,7 +130,7 @@ static void _Key1Release(void* userData)
 		ButtonBarSetKeyImages(KEYINDEX_4, &init_cal, &init_cal);
 		ButtonBarSetKeyImages(KEYINDEX_5, &blank, &blank);
 	} else if (screen_state == ZERO_THRUST) {
-
+		position_capture_request = 11;
 	}
 }
 
@@ -139,6 +139,8 @@ static void _Key2Release(void* userData)
 	if (screen_state == DEFAULT) {
 		
 	} else if (screen_state == THRUST_MENU) {
+		set1_set2_mode = 11;
+
 		screen_state = ZERO_THRUST;
 		ButtonBarSetKeyImages(KEYINDEX_1, &set_zthrust, &set_zthrust);
 		ButtonBarSetKeyImages(KEYINDEX_2, &finish_calib, &finish_calib);
@@ -146,6 +148,8 @@ static void _Key2Release(void* userData)
 		ButtonBarSetKeyImages(KEYINDEX_4, &blank, &blank);
 		ButtonBarSetKeyImages(KEYINDEX_5, &blank, &blank);
 	} else if (screen_state == TRANSMIT) {
+		set1_set2_mode = 0;
+
 		screen_state = DEFAULT;
 		ButtonBarSetKeyImages(KEYINDEX_1, &view_meters, &view_meters);
 		ButtonBarSetKeyImages(KEYINDEX_2, &blank, &blank);
@@ -161,6 +165,8 @@ static void _Key2Release(void* userData)
 		ButtonBarSetKeyImages(KEYINDEX_4, &init_cal, &init_cal);
 		ButtonBarSetKeyImages(KEYINDEX_5, &blank, &blank);
 	} else if (screen_state == ZERO_THRUST) {
+		set1_set2_mode = 0;
+
 		screen_state = DEFAULT;
 		ButtonBarSetKeyImages(KEYINDEX_1, &view_meters, &view_meters);
 		ButtonBarSetKeyImages(KEYINDEX_2, &blank, &blank);
@@ -180,6 +186,8 @@ static void _Key3Release(void* userData)
 		ButtonBarSetKeyImages(KEYINDEX_4, &blank, &blank);
 		ButtonBarSetKeyImages(KEYINDEX_5, &exit_menu, &exit_menu);
 	} else if (screen_state == THRUST_MENU) {
+		set1_set2_mode = 22;
+
 		screen_state = TRANSMIT;
 		ButtonBarSetKeyImages(KEYINDEX_1, &set_transmit, &set_transmit);
 		ButtonBarSetKeyImages(KEYINDEX_2, &finish_calib, &finish_calib);

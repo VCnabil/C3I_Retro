@@ -30,6 +30,7 @@ extern int stbdInterceptorPosition;
 extern int intsteer;
 extern int set1_set2_mode;
 extern int set1_set2_flag;
+extern int position_capture_request;
 
 extern int Autocal_Statusi;
 
