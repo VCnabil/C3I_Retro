@@ -15,6 +15,16 @@ static void _Key5Release(void* userData);
 void Screen3Enter(void)
 {
 
+	m_SYSTEMOPTIONS_DB[0].status = SettingsGetDATA_MODE();
+	m_SYSTEMOPTIONS_DB[1].status = SettingsGetSERIALXMIT_FlIP();
+	m_SYSTEMOPTIONS_DB[2].status = SettingsGetNOZZLEMAP_FLIP();
+	m_SYSTEMOPTIONS_DB[3].status = SettingsGetBUCKETMAP_FLIP();
+	m_SYSTEMOPTIONS_DB[4].status = SettingsGetINTMAP_FLIP();
+	m_SYSTEMOPTIONS_DB[5].status = SettingsGetINTSTEER_FLIP();
+	m_SYSTEMOPTIONS_DB[6].status = SettingsGetSTATION_TYPE();
+	m_SYSTEMOPTIONS_DB[7].status = SettingsGetCOMMS_MODE();
+
+
 }
 
 void Screen3Create(void)
@@ -100,6 +110,16 @@ static void _Key3Release(void* userData)
 static void _Key4Release(void* userData)
 {
 	m_SYSTEMOPTIONS_DB[item].status = !m_SYSTEMOPTIONS_DB[item].status;
+
+	SettingsSetDATA_MODE(m_SYSTEMOPTIONS_DB[0].status);
+	SettingsSetSERIALXMIT_FlIP(m_SYSTEMOPTIONS_DB[1].status);
+	SettingsSetNOZZLEMAP_FLIP(m_SYSTEMOPTIONS_DB[2].status);
+	SettingsSetBUCKETMAP_FLIP(m_SYSTEMOPTIONS_DB[3].status);
+	SettingsSetINTMAP_FLIP(m_SYSTEMOPTIONS_DB[4].status);
+	SettingsSetINTSTEER_FLIP(m_SYSTEMOPTIONS_DB[5].status);
+	SettingsSetSTATION_TYPE(m_SYSTEMOPTIONS_DB[6].status);
+	SettingsSetCOMMS_MODE(m_SYSTEMOPTIONS_DB[7].status);
+
 }
 
 static void _Key5Release(void* userData)
