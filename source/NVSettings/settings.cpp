@@ -1003,8 +1003,8 @@ static void _SettingsLoadDefaults(void)
 	m_settings.NOZZLEMAP_FLIP = 0;
 	m_settings.BUCKETMAP_FLIP = 0;
 	m_settings.INTMAP_FLIP = 0;
-	m_settings.INTSTEER_FLIP = 0;
-	m_settings.STATION_TYPE = 0;
+	m_settings.INTSTEER_FLIP = 1;
+	m_settings.STATION_TYPE = 1;
 	m_settings.COMMS_MODE = 0;
 
 	m_settings.TABMAP_FLIP = 0;
