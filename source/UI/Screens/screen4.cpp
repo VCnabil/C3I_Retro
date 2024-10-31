@@ -173,6 +173,7 @@ static void _Key2Release(void* userData)
 		ButtonBarSetKeyImages(KEYINDEX_5, &blank, &blank);
 	} else if (screen_state == TRANSMIT) {
 		set1_set2_mode = 0;
+		position_capture_request = 0;
 
 		screen_state = DEFAULT;
 		ButtonBarSetKeyImages(KEYINDEX_1, &view_meters, &view_meters);
@@ -190,6 +191,7 @@ static void _Key2Release(void* userData)
 		ButtonBarSetKeyImages(KEYINDEX_5, &blank, &blank);
 	} else if (screen_state == ZERO_THRUST) {
 		set1_set2_mode = 0;
+		position_capture_request = 0;
 
 		screen_state = DEFAULT;
 		ButtonBarSetKeyImages(KEYINDEX_1, &view_meters, &view_meters);
