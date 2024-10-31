@@ -1,76 +1,56 @@
 #include "project.h"
 
-static uint32_t m_eidHeaderText = ELEMENTID_INVALID;
-static uint32_t m_eidData = ELEMENTID_INVALID;
-
 static void _Key1Release(void* userData);
-char* CalcChecksum(const char* sentence);
+static void _Key2Release(void* userData);
+static void _Key3Release(void* userData);
+static void _Key4Release(void* userData);
+static void _Key5Release(void* userData);
+//char* CalcChecksum(const char* sentence);
+
+static int _cnt = 0;
+int saved_value = 0;
 
 void ScreenDebugEnter(void)
 {
-
+	//load value from eeprom
+	saved_value = SettingsGetTestSave();
+	_cnt = saved_value;
 }
 
 void ScreenDebugCreate(void)
 {
-	// Setup default keys
-	ScreensSetupDefaultKeys();
-
-	ButtonBarRegisterKeyReleaseCallback(KEYINDEX_1, _Key1Release, nullptr);
-
-	ButtonBarSetMode(BUTTONBARMODE_INVISIBLE);
-
 	// Clear layers
 	vLcdBlankerEx(WHITE, ALPHA_COLOR);
+	// Setup default keys
+	ButtonBarSetHeight(48);
+	// Setup default keys
+	ButtonBarSetKeyText(KEYINDEX_1, FONT_INDEX_TTMAIN, 9, BLACK, "view", "meters");
+	ButtonBarSetKeyText(KEYINDEX_2, FONT_INDEX_TTMAIN, 10, BLACK, "CNT", "+");
+	ButtonBarSetKeyText(KEYINDEX_3, FONT_INDEX_TTMAIN, 10, BLACK, "CNT", "-");
+	ButtonBarSetKeyText(KEYINDEX_4, FONT_INDEX_TTMAIN, 10, BLACK, "CNT", "Save");
+	ButtonBarSetKeyText(KEYINDEX_5, FONT_INDEX_TTMAIN, 9, BLACK, "", "");
 
-	// Text output (to layer 1)
+	ButtonBarRegisterKeyReleaseCallback(KEYINDEX_1, _Key1Release, nullptr);
+	ButtonBarRegisterKeyReleaseCallback(KEYINDEX_2, _Key2Release, nullptr);
+	ButtonBarRegisterKeyReleaseCallback(KEYINDEX_3, _Key3Release, nullptr);
+	ButtonBarRegisterKeyReleaseCallback(KEYINDEX_4, _Key4Release, nullptr);
+	ButtonBarRegisterKeyReleaseCallback(KEYINDEX_5, _Key5Release, nullptr);
+
 	SimpleTextSetupFontEx(FONT_INDEX_TTMAIN, 25, HORIZONTAL_ALIGNMENT_CENTRE, VERTICAL_ALIGNMENT_TOP, 0);
-	SimpleTextDraw(lcd_get_width() / 2, 5, "Debug Screen", BLACK, 100, LAYER_BACK);
+	SimpleTextDraw(lcd_get_width() / 2, 5, "EEProm Save", BLACK, 100, LAYER_BACK);
+
+	ButtonBarSetMode(BUTTONBARMODE_VISIBLE_ALWAYS);
 }
 
 void ScreenDebugUpdate(void)
 {
-	
+
 	fill_lcd_screen(WHITE, LAYER_FRONT);
-	
-	const uint32_t dataStart_Y = MenuTitleBarGetHeight() + 5;
-	const uint32_t dataGap_X = 40;
-	const uint32_t dataGap_Y = 11;
-	const uint32_t fontSize = 8;
-	const uint32_t messagesPerScreen = (uint32_t)((lcd_get_height() - dataStart_Y - back.y) / dataGap_Y);
+	SimpleTextSetupFontEx(FONT_INDEX_TTMAIN, 25, HORIZONTAL_ALIGNMENT_CENTRE, VERTICAL_ALIGNMENT_TOP, 0);
+	SimpleTextDraw(lcd_get_width() / 2, lcd_get_height() / 2, "CNT: ", BLACK, 100, LAYER_FRONT);
+	SimpleTextDraw(lcd_get_width() / 2, lcd_get_height() / 2 + 50, std::to_string(_cnt).c_str(), BLACK, 100, LAYER_FRONT);
 
-	char str[255] = { 0 };
-	uint32_t screenPos;
-	MessageQueueInfo_t queueInfo;
 
-	GetQueueInfo(&queueInfo);
-
-	// Clear Previous Header text and redraw
-	ElementFillPrevRect(m_eidHeaderText, WHITE, LAYER_FRONT);
-	SimpleTextSetupFontEx(FONT_INDEX_TTMAIN, fontSize, HORIZONTAL_ALIGNMENT_LEFT, VERTICAL_ALIGNMENT_TOP, 1);
-	sprintf(str, "UART PORT - RdIndex=%d, WrIndex=%d msgs:%d", queueInfo.NextReadIndex, queueInfo.NextWriteIndex, messagesPerScreen);
-	SimpleTextDrawEle(m_eidHeaderText, 5, MenuTitleBarGetHeight() - 2 - fontSize + 100, str, BLACK, 100, LAYER_FRONT);
-
-	ElementFillPrevRect(m_eidData, WHITE, LAYER_FRONT);
-	SimpleTextSetupFontEx(FONT_INDEX_TTMAIN, fontSize, HORIZONTAL_ALIGNMENT_LEFT, VERTICAL_ALIGNMENT_TOP, 1);
-
-	uint8_t* buf = PeekMessage(PeekTail, 1, (uint8_t*)str, sizeof(str));
-	SimpleTextDrawEle(m_eidData, (dataGap_X / 2), dataStart_Y + 100, str, BLACK, 100, LAYER_FRONT);
-	int value0 = 1;
-	int value1 = 0;
-	int value2 = 0;
-	int value3 = 0;
-	int value4 = 0;
-	int value5 = 0;
-	int value6 = 0;
-	int value7 = 0;
-	char messageWithoutChecksum[50];
-	snprintf(messageWithoutChecksum, sizeof(messageWithoutChecksum), "$PVCC,%d,%d,%d,%d,%d,%d,%d,%d", value0, value1, value2, value3, value4, value5, value6, value7);
-	char* checksum = CalcChecksum(messageWithoutChecksum);
-	char fullMessage[60]; //guestimate I counted 38bytes , but there could be more , so 60 is safe  
-	snprintf(fullMessage, sizeof(fullMessage), "%s*%s\r", messageWithoutChecksum, checksum);
-	uint32_t dataLen = strlen(fullMessage);
-	UARTSend((uint8_t*)fullMessage, dataLen);
 }
 
 void ScreenDebugExit(void)
@@ -81,18 +61,24 @@ static void _Key1Release(void* userData)
 {
 	MMIScreenGoto(SCREENID_1);
 }
-char* CalcChecksum(const char* msg) {
-	static char checksumStr[3];
-	int checksum = 0;
-	if (msg[0] == '$') {
-		msg++;
-	}
-	//while ( *msg != '*') {
-	//	checksum ^= (unsigned char)(*msg++);
-	//}
-	while (*msg && *msg != '*') {
-		checksum ^= (unsigned char)(*msg++);
-	}
-	snprintf(checksumStr, sizeof(checksumStr), "%02X", checksum);
-	return checksumStr;
+
+static void _Key2Release(void* userData)
+{
+	_cnt++;
+}
+
+static void _Key3Release(void* userData)
+{
+	_cnt--;
+}
+
+static void _Key4Release(void* userData)
+{
+	saved_value = _cnt;
+	SettingsSetTestSave(saved_value);
+}
+
+static void _Key5Release(void* userData)
+{
+
 }
