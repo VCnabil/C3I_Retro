@@ -15,7 +15,9 @@ static void Set_Autocal_Flag_ABORT(void* userData);
 
 enum Screen_State {
 	DEFAULT,
+	THRUST_MENU,
 	ZERO_THRUST,
+	TRANSMIT,
 	AUTOCALIBRATION
 };
 
@@ -32,6 +34,7 @@ void Screen4Enter(void)
 
 void Screen4Create(void)
 {
+	screen_state = DEFAULT;
 	vLcdBlankerEx(WHITE, ALPHA_COLOR);
 
 	ScreensSetupDefaultKeys();
@@ -59,8 +62,11 @@ void Screen4Update(void)
 	sendSerial();
 	if (screen_state == DEFAULT) {
 
-	}
-	if (screen_state == AUTOCALIBRATION) {
+	} else if (screen_state == THRUST_MENU) {
+
+	} else if (screen_state == TRANSMIT) {
+
+	} else if (screen_state == AUTOCALIBRATION) {
 		switch (Autocal_Statusi)
 		{
 		case 0:
@@ -95,8 +101,7 @@ void Screen4Update(void)
 			SimpleTextDraw(190, 50, "Unknown Status", BLACK, 100, LAYER_FRONT);
 			break;
 		}
-	}
-	if (screen_state == ZERO_THRUST) {
+	} else if (screen_state == ZERO_THRUST) {
 
 	}
 
@@ -110,35 +115,82 @@ void Screen4Exit(void)
 
 static void _Key1Release(void* userData)
 {
-	MMIScreenGoto(SCREENID_1);
+	if (screen_state == DEFAULT) {
+		MMIScreenGoto(SCREENID_1);
+	} else if (screen_state == THRUST_MENU) {
+		MMIScreenGoto(SCREENID_1);
+	} else if (screen_state == TRANSMIT) {
+
+	} else if (screen_state == AUTOCALIBRATION) {
+		autocal_cmd = FINISH;
+		screen_state = DEFAULT;
+		ButtonBarSetKeyImages(KEYINDEX_1, &view_meters, &view_meters);
+		ButtonBarSetKeyImages(KEYINDEX_2, &blank, &blank);
+		ButtonBarSetKeyImages(KEYINDEX_3, &thrust_calib, &thrust_calib);
+		ButtonBarSetKeyImages(KEYINDEX_4, &init_cal, &init_cal);
+		ButtonBarSetKeyImages(KEYINDEX_5, &blank, &blank);
+	} else if (screen_state == ZERO_THRUST) {
+
+	}
 }
 
 static void _Key2Release(void* userData)
 {
 	if (screen_state == DEFAULT) {
-
-	}
-	if (screen_state == AUTOCALIBRATION) {
-		autocal_cmd = FINISH;
-	}
-	if (screen_state == ZERO_THRUST) {
-
+		
+	} else if (screen_state == THRUST_MENU) {
+		screen_state = ZERO_THRUST;
+		ButtonBarSetKeyImages(KEYINDEX_1, &set_zthrust, &set_zthrust);
+		ButtonBarSetKeyImages(KEYINDEX_2, &finish_calib, &finish_calib);
+		ButtonBarSetKeyImages(KEYINDEX_3, &blank, &blank);
+		ButtonBarSetKeyImages(KEYINDEX_4, &blank, &blank);
+		ButtonBarSetKeyImages(KEYINDEX_5, &blank, &blank);
+	} else if (screen_state == TRANSMIT) {
+		screen_state = DEFAULT;
+		ButtonBarSetKeyImages(KEYINDEX_1, &view_meters, &view_meters);
+		ButtonBarSetKeyImages(KEYINDEX_2, &blank, &blank);
+		ButtonBarSetKeyImages(KEYINDEX_3, &thrust_calib, &thrust_calib);
+		ButtonBarSetKeyImages(KEYINDEX_4, &init_cal, &init_cal);
+		ButtonBarSetKeyImages(KEYINDEX_5, &blank, &blank);
+	} else if (screen_state == AUTOCALIBRATION) {
+		autocal_cmd = ABORT;
+		screen_state = DEFAULT;
+		ButtonBarSetKeyImages(KEYINDEX_1, &view_meters, &view_meters);
+		ButtonBarSetKeyImages(KEYINDEX_2, &blank, &blank);
+		ButtonBarSetKeyImages(KEYINDEX_3, &thrust_calib, &thrust_calib);
+		ButtonBarSetKeyImages(KEYINDEX_4, &init_cal, &init_cal);
+		ButtonBarSetKeyImages(KEYINDEX_5, &blank, &blank);
+	} else if (screen_state == ZERO_THRUST) {
+		screen_state = DEFAULT;
+		ButtonBarSetKeyImages(KEYINDEX_1, &view_meters, &view_meters);
+		ButtonBarSetKeyImages(KEYINDEX_2, &blank, &blank);
+		ButtonBarSetKeyImages(KEYINDEX_3, &thrust_calib, &thrust_calib);
+		ButtonBarSetKeyImages(KEYINDEX_4, &init_cal, &init_cal);
+		ButtonBarSetKeyImages(KEYINDEX_5, &blank, &blank);
 	}
 }
 
 static void _Key3Release(void* userData)
 {
 	if (screen_state == DEFAULT) {
-		screen_state = ZERO_THRUST;
-		ButtonBarSetKeyImages(KEYINDEX_2, &blank, &blank);
+		screen_state = THRUST_MENU;
+		ButtonBarSetKeyImages(KEYINDEX_1, &view_meters, &view_meters);
+		ButtonBarSetKeyImages(KEYINDEX_2, &init_zthrust, &init_zthrust);
+		ButtonBarSetKeyImages(KEYINDEX_3, &init_transmit, &init_transmit);
+		ButtonBarSetKeyImages(KEYINDEX_4, &blank, &blank);
+		ButtonBarSetKeyImages(KEYINDEX_5, &exit_menu, &exit_menu);
+	} else if (screen_state == THRUST_MENU) {
+		screen_state = TRANSMIT;
+		ButtonBarSetKeyImages(KEYINDEX_1, &set_transmit, &set_transmit);
+		ButtonBarSetKeyImages(KEYINDEX_2, &finish_calib, &finish_calib);
 		ButtonBarSetKeyImages(KEYINDEX_3, &blank, &blank);
 		ButtonBarSetKeyImages(KEYINDEX_4, &blank, &blank);
 		ButtonBarSetKeyImages(KEYINDEX_5, &blank, &blank);
-	}
-	if (screen_state == AUTOCALIBRATION) {
+	} else if (screen_state == TRANSMIT) {
+
+	} else if (screen_state == AUTOCALIBRATION) {
 		autocal_cmd = ABORT;
-	}
-	if (screen_state == ZERO_THRUST) {
+	} else if (screen_state == ZERO_THRUST) {
 
 	}
 }
@@ -147,16 +199,19 @@ static void _Key4Release(void* userData)
 {
 	if (screen_state == DEFAULT) {
 		screen_state = AUTOCALIBRATION;
-		ButtonBarSetKeyImages(KEYINDEX_2, &blank, &blank);
+		ButtonBarSetKeyImages(KEYINDEX_1, &finish_calib, &finish_calib);
+		ButtonBarSetKeyImages(KEYINDEX_2, &abort_calib, &abort_calib);
 		ButtonBarSetKeyImages(KEYINDEX_3, &blank, &blank);
 		ButtonBarSetKeyImages(KEYINDEX_4, &blank, &blank);
-		ButtonBarSetKeyImages(KEYINDEX_5, &blank, &blank);
+		ButtonBarSetKeyImages(KEYINDEX_5, &exit_menu, &blank);
 		autocal_cmd = INITIALIZE;
-	}
-	if (screen_state == AUTOCALIBRATION) {
+	} else if (screen_state == THRUST_MENU) {
+		
+	} else if (screen_state == TRANSMIT) {
 
-	}
-	if (screen_state == ZERO_THRUST) {
+	} else if (screen_state == AUTOCALIBRATION) {
+
+	} else if (screen_state == ZERO_THRUST) {
 
 	}
 }
@@ -165,11 +220,18 @@ static void _Key5Release(void* userData)
 {
 	if (screen_state == DEFAULT) {
 
-	}
-	if (screen_state == AUTOCALIBRATION) {
+	} else if (screen_state == THRUST_MENU) {
+		screen_state = DEFAULT;
+		ButtonBarSetKeyImages(KEYINDEX_1, &view_meters, &view_meters);
+		ButtonBarSetKeyImages(KEYINDEX_2, &blank, &blank);
+		ButtonBarSetKeyImages(KEYINDEX_3, &thrust_calib, &thrust_calib);
+		ButtonBarSetKeyImages(KEYINDEX_4, &init_cal, &init_cal);
+		ButtonBarSetKeyImages(KEYINDEX_5, &blank, &blank);
+	} else if (screen_state == TRANSMIT) {
 
-	}
-	if (screen_state == ZERO_THRUST) {
+	} else if (screen_state == AUTOCALIBRATION) {
+
+	} else if (screen_state == ZERO_THRUST) {
 
 	}
 }

@@ -364,7 +364,7 @@ typedef struct
 } init_transmit_T;
 extern const init_transmit_T init_transmit;
 
-// Bitmap File: bitmaps/init_zthrust.png
+// Bitmap File: bitmaps/set_zthrust.png
 typedef struct
 {
     unsigned char nb_layer;
@@ -373,6 +373,16 @@ typedef struct
     unsigned short bitmap[3072];
 } set_zthrust_T;
 extern const set_zthrust_T set_zthrust;
+
+// Bitmap File: bitmaps/set_transmit.png
+typedef struct
+{
+    unsigned char nb_layer;
+    unsigned int x;
+    unsigned int y;
+    unsigned short bitmap[3072];
+} set_transmit_T;
+extern const set_transmit_T set_transmit;
 
 // Bitmap File: bitmaps/finish_calib.png
 typedef struct
