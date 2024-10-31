@@ -46,6 +46,35 @@ typedef struct
 	uint8_t CANSystemInstance[CAN_MAX_PORTS];
 	uint8_t CANDeviceInstance[CAN_MAX_PORTS];
 
+	int32_t testSave;
+
+	 //VECTOR EEPROM PARAMETERS..........................................................
+	uint8_t PN_MAX;  //port nozzle max sensor value
+	uint8_t PN_MIN;  //port nozzle min sensor value
+	uint8_t SN_MAX;  //stbd nozzle max sensor value
+	uint8_t SN_MIN;  //stbd nozzle min sensor value
+	uint8_t PB_MAX;  //port bucket max sensor value
+	uint8_t PB_MIN;  //port bucket min sensor value
+	uint8_t SB_MAX;  //stbd bucket max sensor value
+	uint8_t SB_MIN;  //stbd bucket min sensor value
+	uint8_t PT_MAX;  //port trimtab max sensor value
+	uint8_t PT_MIN;  //port trimtab min sensor value
+	uint8_t ST_MAX;  //stbd trimtab max sensor value
+	uint8_t ST_MIN;  //stbd trimtab min sensor value
+	uint8_t PB_NEUTRAL_THRUST;  //port bucket neutral thrust value
+	uint8_t SB_NEUTRAL_THRUST;  //stbd bucket neutral thrust value
+
+	uint8_t DATA_MODE;
+	uint8_t SERIALXMIT_FlIP;
+	uint8_t NOZZLEMAP_FLIP;
+	uint8_t BUCKETMAP_FLIP;
+	uint8_t INTMAP_FLIP;
+	uint8_t INTSTEER_FLIP;
+	uint8_t STATION_TYPE;
+	uint8_t COMMS_MODE;                        
+	uint8_t TABMAP_FLIP;
+
+
 } SETTINGS_T;
 
 //------------------------------------------------------------------------------
@@ -570,6 +599,350 @@ void SettingsSetCANDeviceInstance(uint32_t CANPort, uint8_t deviceInstance)
 	}
 }
 
+
+int32_t SettingsGetTestSave(void)
+{
+	return m_settings.testSave;
+}
+
+void SettingsSetTestSave(int32_t value)
+{
+	if (m_settings.testSave != value)
+	{
+		m_settings.testSave = value;
+		SettingsSave();
+	}
+}
+
+ // setter and getters for VECTOR EEPROM PARAMETERS.......................................................... 
+uint8_t SettingsGetPN_MAX(void)
+{
+	return m_settings.PN_MAX;
+}
+
+void SettingsSetPN_MAX(uint8_t value)
+{
+	if (m_settings.PN_MAX != value)
+	{
+		m_settings.PN_MAX = value;
+		SettingsSave();
+	}
+}
+
+uint8_t SettingsGetPN_MIN(void)
+{
+	return m_settings.PN_MIN;
+}
+
+void SettingsSetPN_MIN(uint8_t value)
+{
+	if (m_settings.PN_MIN != value)
+	{
+		m_settings.PN_MIN = value;
+		SettingsSave();
+	}
+}
+
+uint8_t SettingsGetSN_MAX(void)
+{
+	return m_settings.SN_MAX;
+}
+
+void SettingsSetSN_MAX(uint8_t value)
+{
+	if (m_settings.SN_MAX != value)
+	{
+		m_settings.SN_MAX = value;
+		SettingsSave();
+	}
+}
+
+uint8_t SettingsGetSN_MIN(void)
+{
+	return m_settings.SN_MIN;
+}
+
+void SettingsSetSN_MIN(uint8_t value)
+{
+	if (m_settings.SN_MIN != value)
+	{
+		m_settings.SN_MIN = value;
+		SettingsSave();
+	}
+}
+
+uint8_t SettingsGetPB_MAX(void)
+{
+	return m_settings.PB_MAX;
+}
+
+void SettingsSetPB_MAX(uint8_t value)
+{
+	if (m_settings.PB_MAX != value)
+	{
+		m_settings.PB_MAX = value;
+		SettingsSave();
+	}
+}
+
+uint8_t SettingsGetPB_MIN(void)
+{
+	return m_settings.PB_MIN;
+}
+
+void SettingsSetPB_MIN(uint8_t value)
+{
+	if (m_settings.PB_MIN != value)
+	{
+		m_settings.PB_MIN = value;
+		SettingsSave();
+	}
+}
+
+uint8_t SettingsGetSB_MAX(void)
+{
+	return m_settings.SB_MAX;
+}
+
+void SettingsSetSB_MAX(uint8_t value)
+{
+	if (m_settings.SB_MAX != value)
+	{
+		m_settings.SB_MAX = value;
+		SettingsSave();
+	}
+}
+
+uint8_t SettingsGetSB_MIN(void)
+{
+	return m_settings.SB_MIN;
+}
+
+void SettingsSetSB_MIN(uint8_t value)
+{
+	if (m_settings.SB_MIN != value)
+	{
+		m_settings.SB_MIN = value;
+		SettingsSave();
+	}
+}
+
+uint8_t SettingsGetPT_MAX(void)
+{
+	return m_settings.PT_MAX;
+}
+
+void SettingsSetPT_MAX(uint8_t value)
+{
+	if (m_settings.PT_MAX != value)
+	{
+		m_settings.PT_MAX = value;
+		SettingsSave();
+	}
+}
+
+uint8_t SettingsGetPT_MIN(void)
+{
+	return m_settings.PT_MIN;
+}
+
+void SettingsSetPT_MIN(uint8_t value)
+{
+	if (m_settings.PT_MIN != value)
+	{
+		m_settings.PT_MIN = value;
+		SettingsSave();
+	}
+}
+
+uint8_t SettingsGetST_MAX(void)
+{
+	return m_settings.ST_MAX;
+}
+	
+void SettingsSetST_MAX(uint8_t value)
+{
+	if (m_settings.ST_MAX != value)
+	{
+		m_settings.ST_MAX = value;
+		SettingsSave();
+	}
+}
+
+uint8_t SettingsGetST_MIN(void)
+{
+	return m_settings.ST_MIN;
+}
+
+void SettingsSetST_MIN(uint8_t value)
+{
+	if (m_settings.ST_MIN != value)
+	{
+		m_settings.ST_MIN = value;
+		SettingsSave();
+	}
+}
+
+uint8_t SettingsGetPB_NEUTRAL_THRUST(void)
+{
+	return m_settings.PB_NEUTRAL_THRUST;
+}
+
+void SettingsSetPB_NEUTRAL_THRUST(uint8_t value)
+{
+	if (m_settings.PB_NEUTRAL_THRUST != value)
+	{
+		m_settings.PB_NEUTRAL_THRUST = value;
+		SettingsSave();
+	}
+}
+
+uint8_t SettingsGetSB_NEUTRAL_THRUST(void)
+{
+	return m_settings.SB_NEUTRAL_THRUST; 
+}
+
+void SettingsSetSB_NEUTRAL_THRUST(uint8_t value)
+{
+	if (m_settings.SB_NEUTRAL_THRUST != value)
+	{
+		m_settings.SB_NEUTRAL_THRUST = value;
+		SettingsSave();
+	}
+}
+
+
+//lcd settings for the vector
+
+uint8_t SettingsGetDATA_MODE(void)
+{
+	return m_settings.DATA_MODE;
+}
+
+void SettingsSetDATA_MODE(uint8_t value)
+{
+	if (m_settings.DATA_MODE != value)
+	{
+		m_settings.DATA_MODE = value;
+		SettingsSave();
+	}
+}
+
+uint8_t SettingsGetSERIALXMIT_FlIP(void)
+{
+	return m_settings.SERIALXMIT_FlIP;
+}
+
+void SettingsSetSERIALXMIT_FlIP(uint8_t value)
+{
+	if (m_settings.SERIALXMIT_FlIP != value)
+	{
+		m_settings.SERIALXMIT_FlIP = value;
+		SettingsSave();
+	}
+}
+
+uint8_t SettingsGetNOZZLEMAP_FLIP(void)
+{
+	return m_settings.NOZZLEMAP_FLIP;
+}
+
+void SettingsSetNOZZLEMAP_FLIP(uint8_t value)
+{
+	if (m_settings.NOZZLEMAP_FLIP != value)
+	{
+		m_settings.NOZZLEMAP_FLIP = value;
+		SettingsSave();
+	}
+}
+
+uint8_t SettingsGetBUCKETMAP_FLIP(void)
+{
+	return m_settings.BUCKETMAP_FLIP;
+}
+
+void SettingsSetBUCKETMAP_FLIP(uint8_t value)
+{
+	if (m_settings.BUCKETMAP_FLIP != value)
+	{
+		m_settings.BUCKETMAP_FLIP = value;
+		SettingsSave();
+	}
+}
+
+uint8_t SettingsGetINTMAP_FLIP(void)
+{
+	return m_settings.INTMAP_FLIP;
+}
+
+void SettingsSetINTMAP_FLIP(uint8_t value)
+{
+	if (m_settings.INTMAP_FLIP != value)
+	{
+		m_settings.INTMAP_FLIP = value;
+		SettingsSave();
+	}
+}
+
+uint8_t SettingsGetINTSTEER_FLIP(void)
+{
+	return m_settings.INTSTEER_FLIP;
+}
+
+void SettingsSetINTSTEER_FLIP(uint8_t value)
+{
+	if (m_settings.INTSTEER_FLIP != value)
+	{
+		m_settings.INTSTEER_FLIP = value;
+		SettingsSave();
+	}
+}
+
+uint8_t SettingsGetSTATION_TYPE(void)
+{
+	return m_settings.STATION_TYPE;
+}
+	
+void SettingsSetSTATION_TYPE(uint8_t value)
+{
+	if (m_settings.STATION_TYPE != value)
+	{
+		m_settings.STATION_TYPE = value;
+		SettingsSave();
+	}
+}
+
+uint8_t SettingsGetCOMMS_MODE(void)
+{
+	return m_settings.COMMS_MODE;
+}
+
+void SettingsSetCOMMS_MODE(uint8_t value)
+{
+	if (m_settings.COMMS_MODE != value)
+	{
+		m_settings.COMMS_MODE = value;
+		SettingsSave();
+	}
+}
+
+
+uint8_t SettingsGetTABMAP_FLIP(void)
+{
+	return m_settings.TABMAP_FLIP;
+}
+
+void SettingsSetTABMAP_FLIP(uint8_t value)
+{
+	if (m_settings.TABMAP_FLIP != value)
+	{
+		m_settings.TABMAP_FLIP = value;
+		SettingsSave();
+	}
+}
+
+
+
 // Load default settings to EEPROM and force a save
 // This is called from syslib if the settings are being reset to defaults
 void load_eeprom_defaults(void)
@@ -609,4 +982,30 @@ static void _SettingsLoadDefaults(void)
 	m_settings.CANSystemInstance[CAN_PORT1] = 0;
 	m_settings.CANDeviceInstance[CAN_PORT2] = 0;
 	m_settings.CANSystemInstance[CAN_PORT2] = 0;
+
+	m_settings.testSave = 1;
+	m_settings.PN_MAX = 0;
+	m_settings.PN_MIN = 0;
+	m_settings.SN_MAX = 0;
+	m_settings.SN_MIN = 0;
+	m_settings.PB_MAX = 0;
+	m_settings.PB_MIN = 0;
+	m_settings.SB_MAX = 0;
+	m_settings.SB_MIN = 0;
+	m_settings.PT_MAX = 0;
+	m_settings.PT_MIN = 0;
+	m_settings.ST_MAX = 0;
+	m_settings.ST_MIN = 0;
+	m_settings.PB_NEUTRAL_THRUST = 0;
+	m_settings.SB_NEUTRAL_THRUST = 0;
+
+	m_settings.DATA_MODE = 0;
+	m_settings.NOZZLEMAP_FLIP = 0;
+	m_settings.BUCKETMAP_FLIP = 0;
+	m_settings.INTMAP_FLIP = 0;
+	m_settings.INTSTEER_FLIP = 0;
+	m_settings.STATION_TYPE = 0;
+	m_settings.COMMS_MODE = 0;
+
+	m_settings.TABMAP_FLIP = 0;
 }
