@@ -102,7 +102,29 @@ void Screen4Update(void)
 			break;
 		}
 	} else if (screen_state == ZERO_THRUST) {
+		switch (Autocal_Statusi)
+		{
+		case 0:
+			SimpleTextDraw(160, 50, "Not Active", BLACK, 100, LAYER_FRONT);
+			break;
 
+		case 55:
+			SimpleTextDraw(160, 50, "ACTIVE", BLACK, 100, LAYER_FRONT);
+			SimpleTextSetupFontEx(FONT_INDEX_TTMAIN, 18, HORIZONTAL_ALIGNMENT_CENTRE, VERTICAL_ALIGNMENT_TOP, 0);
+			if(position_capture_request == 11) SimpleTextDraw(160, 80, "Request Pending...", BLACK, 100, LAYER_FRONT);
+			else SimpleTextDraw(160, 80, "Set Neutral Thrust Position", BLACK, 100, LAYER_FRONT);
+			break;
+
+		case 66:
+			SimpleTextDraw(160, 50, "ACTIVE", BLACK, 100, LAYER_FRONT);
+			SimpleTextSetupFontEx(FONT_INDEX_TTMAIN, 18, HORIZONTAL_ALIGNMENT_CENTRE, VERTICAL_ALIGNMENT_TOP, 0);
+			SimpleTextDraw(160, 80, "Neutral Thrust Set!", BLACK, 100, LAYER_FRONT);
+			break;
+
+		default:
+			SimpleTextDraw(190, 50, "Unknown Status", BLACK, 100, LAYER_FRONT);
+			break;
+		}
 	}
 
 }
