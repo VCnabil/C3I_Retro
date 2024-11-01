@@ -1,5 +1,7 @@
 #include "project.h"
 
+static uint32_t m_eidHeaderText = ELEMENTID_INVALID;
+static uint32_t m_eidData = ELEMENTID_INVALID;
 static void _Key1Release(void* userData);
 static void _Key2Release(void* userData);
 static void _Key3Release(void* userData);
@@ -50,6 +52,23 @@ void ScreenDebugUpdate(void)
 	SimpleTextDraw(lcd_get_width() / 2, lcd_get_height() / 2, "CNT: ", BLACK, 100, LAYER_FRONT);
 	SimpleTextDraw(lcd_get_width() / 2, lcd_get_height() / 2 + 50, std::to_string(_cnt).c_str(), BLACK, 100, LAYER_FRONT);
 
+
+	char str[255] = { 0 };
+	MessageQueueInfo_t queueInfo;
+
+	GetQueueInfo(&queueInfo);
+
+	// Clear Previous Header text and redraw
+	ElementFillPrevRect(m_eidHeaderText, WHITE, LAYER_FRONT);
+	SimpleTextSetupFontEx(FONT_INDEX_TTMAIN, 10, HORIZONTAL_ALIGNMENT_LEFT, VERTICAL_ALIGNMENT_TOP, 1);
+	sprintf(str, "UART PORT - RdIndex=%d, WrIndex=%d msgs:%d", queueInfo.NextReadIndex, queueInfo.NextWriteIndex, 3);
+	SimpleTextDrawEle(m_eidHeaderText, 5, MenuTitleBarGetHeight() +40, str, BLACK, 100, LAYER_FRONT);
+
+	ElementFillPrevRect(m_eidData, WHITE, LAYER_FRONT);
+	SimpleTextSetupFontEx(FONT_INDEX_TTMAIN, 10, HORIZONTAL_ALIGNMENT_LEFT, VERTICAL_ALIGNMENT_TOP, 1);
+
+	uint8_t* buf = PeekMessage(PeekTail, 1, (uint8_t*)str, sizeof(str));
+	SimpleTextDrawEle(m_eidData, 7, MenuTitleBarGetHeight() + 60, str, BLACK, 100, LAYER_FRONT);
 
 }
 

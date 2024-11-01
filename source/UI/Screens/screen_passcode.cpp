@@ -11,7 +11,7 @@ static void _Key5Release(void* userData);
 
 //Passcode
 int entered = 0;
-const int array_size = 4;
+const int array_size = 5;
 char passcode[array_size];
 
 void ScreenPasscodeEnter(void)
@@ -52,6 +52,9 @@ void ScreenPasscodeCreate(void)
 
 void ScreenPasscodeUpdate(void)
 {
+	if (entered < array_size) {
+		passcode[entered] = '\0';
+	}
 	if (strcmp(passcode, "1123") == 0) {
 		switch (passcodeScreen)
 		{
@@ -86,6 +89,10 @@ static void _Key2Release(void* userData) {
 
 	passcode[entered] = '1';
 	entered++;
+
+	if (entered < array_size - 1) {
+		passcode[entered] = '\0'; 
+	}
 }
 
 static void _Key3Release(void* userData) {
@@ -99,6 +106,11 @@ static void _Key3Release(void* userData) {
 
 	passcode[entered] = '2';
 	entered++;
+
+
+	if (entered < array_size - 1) {
+		passcode[entered] = '\0';
+	}
 }
 
 static void _Key4Release(void* userData) {
@@ -112,6 +124,11 @@ static void _Key4Release(void* userData) {
 
 	passcode[entered] = '3';
 	entered++;
+
+
+	if (entered < array_size - 1) {
+		passcode[entered] = '\0';
+	}
 
 }
 

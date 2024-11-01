@@ -27,8 +27,8 @@ extern FAULTS_DB m_FAULTS_DB[] = {
 
     { STA3, 0, "Idle Knob" },
     { STA3, 1, "Helm / Tiller" },
-    { STA3, 2, "Roll command" },
-    { STA3, 3, "Trim command" },
+    { STA3, 2, "Stbd Lever" },
+    { STA3, 3, "Port Lever" },
     { STA3, 4, "Joystick Y-axis" },
     { STA3, 5, "Joystick X-axis" },
 
