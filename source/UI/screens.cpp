@@ -46,7 +46,7 @@ void ScreensInit(void)
 	MMIRegisterScreen(SCREENID_CAN, ScreenCanEnter, ScreenCanCreate, ScreenCanUpdate, ScreenCanExit);
 
 	// Initial screen.
-    MMIScreenGoto(SCREENID_CAN);
+    MMIScreenGoto(SCREENID_1);
 
 #if defined(ENABLE_FPS_COUNTER)
 	// Enable the Frames Per Second counter on the screen

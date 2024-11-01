@@ -99,5 +99,5 @@ static void _Key4Release(void* userData)
 
 static void _Key5Release(void* userData)
 {
-	MMIScreenGoto(SCREENID_CANVIEWER);
+	MMIScreenGoto(SCREENID_CAN);
 }
