@@ -30,7 +30,7 @@ void ScreenDebugCreate(void)
 	ButtonBarSetKeyText(KEYINDEX_2, FONT_INDEX_TTMAIN, 10, BLACK, "CNT", "+");
 	ButtonBarSetKeyText(KEYINDEX_3, FONT_INDEX_TTMAIN, 10, BLACK, "CNT", "-");
 	ButtonBarSetKeyText(KEYINDEX_4, FONT_INDEX_TTMAIN, 10, BLACK, "CNT", "Save");
-	ButtonBarSetKeyText(KEYINDEX_5, FONT_INDEX_TTMAIN, 9, BLACK, "", "");
+	ButtonBarSetKeyText(KEYINDEX_5, FONT_INDEX_TTMAIN, 9, BLACK, "to", "can");
 
 	ButtonBarRegisterKeyReleaseCallback(KEYINDEX_1, _Key1Release, nullptr);
 	ButtonBarRegisterKeyReleaseCallback(KEYINDEX_2, _Key2Release, nullptr);
@@ -99,5 +99,5 @@ static void _Key4Release(void* userData)
 
 static void _Key5Release(void* userData)
 {
-
+	MMIScreenGoto(SCREENID_CANVIEWER);
 }

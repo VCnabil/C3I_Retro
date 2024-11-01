@@ -34,6 +34,7 @@ source/UI/Screens/screen1.cpp
 source/UI/Screens/screen2.cpp
 source/UI/Screens/screen3.cpp
 source/UI/Screens/screen4.cpp
+source/UI/Screens/screenCan.cpp
 source/UI/Screens/screen_passcode.cpp
 source/UI/Screens/screen_about.cpp
 source/UI/Screens/screen_debug.cpp

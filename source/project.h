@@ -59,6 +59,7 @@
 #include "UI/Screens/screen2.h"
 #include "UI/Screens/screen3.h"
 #include "UI/Screens/screen4.h"
+#include "UI/Screens/screenCan.h"
 #include "UI/Screens/screen_passcode.h"
 #include "UI/Screens/screen_about.h"
 #include "UI/Screens/screen_debug.h"

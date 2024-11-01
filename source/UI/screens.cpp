@@ -38,8 +38,15 @@ void ScreensInit(void)
 	// Keyboard
 	MMIRegisterScreen(SCREENID_KEYBOARD, KeyboardEnter, 0, 0, 0);
 
+	// SCREENID_CANVIEWER 
+	MMIRegisterScreen(SCREENID_CANVIEWER, CANViewerEnter, CANViewerCreate, CANViewerUpdate, 0);
+
+
+	// my can displayer
+	MMIRegisterScreen(SCREENID_CAN, ScreenCanEnter, ScreenCanCreate, ScreenCanUpdate, ScreenCanExit);
+
 	// Initial screen.
-	MMIScreenGoto(SCREENID_1);
+    MMIScreenGoto(SCREENID_CAN);
 
 #if defined(ENABLE_FPS_COUNTER)
 	// Enable the Frames Per Second counter on the screen

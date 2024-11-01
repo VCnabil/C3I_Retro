@@ -119,6 +119,7 @@ void CANViewerEnter(void)
 {
 	// Show the viewer page
 	m_curDisplayMode = DISPLAYMODE_VIEWER;
+	CANViewerInit();
 }
 
 void CANViewerCreate(void)
@@ -177,9 +178,9 @@ static void _UpdateNormal(void)
 		}
 		pRec = &m_frames[m_curCANPort][msgIndex];
 
-		
+
 		SimpleTextSetupFontEx(FONT_INDEX_TTMAIN, FONT_SIZE, HORIZONTAL_ALIGNMENT_RIGHT, VERTICAL_ALIGNMENT_TOP, 1);
-		
+
 		// Time
 		sprintf(str, "%7llu.%03llu", pRec->timeOffsetMicrosecs / 1000000, (pRec->timeOffsetMicrosecs % 1000000) / 1000);
 		SimpleTextDrawEle(m_eidData, TIME_X, DATA_START_Y + (ROW_HEIGHT * screenPos), str, WHITE_TEXT, 100, LAYER_FRONT);
@@ -346,7 +347,7 @@ static void _CreateNormal(void)
 
 	// Receive or Transmit?
 	SimpleTextSetupFontEx(FONT_INDEX_TTMAIN, FONT_SIZE, HORIZONTAL_ALIGNMENT_CENTRE, VERTICAL_ALIGNMENT_TOP, 1);
-	
+
 	SimpleTextDraw(DIRECTION_X, HEADER_DATA_Y, "D", WHITE_TEXT, 100, LAYER_FRONT);
 
 	// CAN ID
@@ -714,7 +715,7 @@ static void _CANViewerStatsEnter(void* userData)
 {
 	// Display the stats page
 	m_curDisplayMode = DISPLAYMODE_STATS;
-	
+
 	timer_register(_CANViewerUpdateStatisticsValues, nullptr, 0, 1000);
 
 	// Force a full redraw

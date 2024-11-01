@@ -22,6 +22,8 @@ typedef enum
 
 /// Diagnostic CAN Viewer Screen
  	SCREENID_CANVIEWER,
+/// my simple can display 
+	SCREENID_CAN,
 
 	/// Diagnostic Database Viewer Screen
 	SCREENID_DBVIEWER,
