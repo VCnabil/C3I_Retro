@@ -29,13 +29,26 @@ void CANViewerLogMessageReceive2(CAN_PORTS_T canPort, CAN_MSG_T* pMsg2)
     MutexLock(&m_canViewerMutex2);
     rxPackets++;
     rxBytes += pMsg2->msg_length;
-    sprintf(latestMessageText, "ID: 0x%X, Length: %d, Data: ", pMsg2->id, pMsg2->msg_length);
+
+    strcpy(latestMessageText, "");
+
+    if (pMsg2->extend)
+    {
+        // Format the J1939 message ID (29-bit)
+        sprintf(latestMessageText, "ID: 0x%08X (Ext), Length: %d, Data: ", pMsg2->id, pMsg2->msg_length);
+    }
+    else
+    {
+        sprintf(latestMessageText, "ID: 0x%03X (Std), Length: %d, Data: ", pMsg2->id, pMsg2->msg_length);
+    }
+
     for (uint8_t i = 0; i < pMsg2->msg_length; ++i)
     {
         char byteStr[5];
         sprintf(byteStr, "%02X ", pMsg2->msg_content[i]);
         strcat(latestMessageText, byteStr);
     }
+
     MutexUnlock(&m_canViewerMutex2);
 }
 void CANViewerInit2(void)
@@ -84,10 +97,13 @@ void ScreenCanUpdate(void)
     SimpleTextSetupFontEx(FONT_INDEX_TTMAIN, 10, HORIZONTAL_ALIGNMENT_LEFT, VERTICAL_ALIGNMENT_TOP, 1);
     sprintf(str, "Rx Packets: %llu", rxPackets);
     SimpleTextDrawEle(m_eidData2, 10, 20, str, BLACK, 100, LAYER_FRONT);
+
     sprintf(str, "Rx Bytes: %llu", rxBytes);
     SimpleTextDrawEle(m_eidData2, 10, 40, str, BLACK, 100, LAYER_FRONT);
-    sprintf(str, "Latest Msg: %s", latestMessageText);
-    SimpleTextDrawEle(m_eidData2, 10, 60, str, BLACK, 100, LAYER_FRONT);
+
+    // Display Latest Message Received
+    SimpleTextDrawEle(m_eidData2, 10, 60, latestMessageText, BLACK, 100, LAYER_FRONT);
+
 }
 void ScreenCanExit(void)
 {
